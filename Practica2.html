@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>PRACTICA 2 - NETEJA I VALIDACIO DE DADES</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>PRACTICA 2 - NETEJA I VALIDACIO DE DADES</h1>
+
+<h1>POL CASELLAS i CARLES RIVAS</h1>
+
+<h1>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</h1>
+
+<h1>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</h1>
+
+<h1>1. DescripciÃƒÂ³ del dataset. PerquÃƒÂ¨ ÃƒÂ©s important i quina pregunta/problema pretÃƒÂ©n respondre?</h1>
+
+<p>El dataset original ÃƒÂ©s el dataset de dades dels passatgers del TitÃƒÂ nic, que sÃ¢â‚¬â„¢utilitza en la competiciÃƒÂ³  Ã¢â‚¬Å“Titanic: Machine Learning from DisasterÃ¢â‚¬Â. Esta composat per dos fitxers, un de training (train.csv) amb 891 registres i un de test (test.csv) amb 418 registres. LÃ¢â‚¬â„¢objectiu del dataset de la competiciÃƒÂ³ es generar un model de ML per predir la supervivÃƒÂ¨ncia a lÃ¢â‚¬â„¢enfonsament del vaixell, en base a la informaciÃƒÂ³ disponible dels passatgers.</p>
+
+<p>El diccionari de dades del dataset original ÃƒÂ©s :</p>
+
+<table border=1>
+
+<th> Variable </th>
+<th> DescripciÃƒÂ³ </th>
+<th> Tipus </th>
+<th> Valors </th>
+
+<tr>
+<td>PassangerId</td>
+<td>Identificador de passatger</td>
+<td>Enter</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Survival</td>
+<td>Identificador de supervivÃƒÂ¨ncia</td>
+<td>Factor</td>
+<td>0 = No, 1 = Yes</td>
+</tr>
+
+<tr>
+<td>Pclass</td>
+<td>Classe del passatge </td>
+<td>Factor</td>
+<td>1 = 1a, 2 = 2ona, 3 = 3Ã‚Âª </td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>Nom del passatger</td>
+<td>Text</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Sex</td>
+<td>Sexe</td>
+<td>Factor</td>
+<td>1 = male, 2 = female</td>
+<td></td>
+</tr>
+<tr>
+<td>Age</td>
+<td>Edat en anys</td>
+<td>Nombre</td>
+<td></td>
+</tr>
+<tr>
+<td>Sibsp</td>
+<td>Nombre de germans i dones embarcats</td>
+<td>Enter   </td>
+<td></td>
+</tr>
+<tr>
+<td>Parch</td>
+<td>Nombre de pares i fills embarcats</td>
+<td>Enter</td>
+<td></td>
+</tr>   
+<tr>
+<td>Ticket</td>
+<td>Nombre de Ticket </td>
+<td>Text</td>
+<td></td>
+</tr>
+<tr>
+<td>Fare</td>
+<td>Tarifa del passatge</td>
+<td>Nombre</td>
+<td></td>
+</tr>
+<tr>
+<td>Cabin</td>
+<td>Nombre de cabina</td>
+<td>Text</td>
+<td></td>
+</tr>
+<tr>
+<td>Embarked</td>
+<td>Port dÃ¢â‚¬â„¢Embarcament</td>
+<td>Factor</td>
+<td>C = Cherbourg 
+Q = Queenstown 
+S = Southampton</td>
+</tr>
+
+</table>
+
+<h1>2. IntegraciÃƒÂ³ i selecciÃƒÂ³ de les dades dÃ¢â‚¬â„¢interÃƒÂ¨s a analitzar.</h1>
+
+<p>Es disposa de 2 fitxers, un fitxer dÃ¢â‚¬â„¢entrenament (que disposa de les dades de supervivÃƒÂ¨ncia) i un fitxer de test (sense les dades de supervivÃƒÂ¨ncia). Es llegeixen les dades i sÃ¢â‚¬â„¢integren en un ÃƒÂºnic dataset.  </p>
+
+<pre><code class="r">library(&#39;dplyr&#39;)
+dades &lt;- bind_rows(read.csv(&#39;train.csv&#39;, stringsAsFactors = F), read.csv(&#39;test.csv&#39;, stringsAsFactors = F))
+</code></pre>
+
+<p>Es crea un dataset que integra els dos fitxers anomenat dades. La comanda dim(dades) mostra el nombre dÃ¢â‚¬â„¢observacions i atributs de la mostra, que en aquest cas sÃƒÂ³n 1309 observacions i 12 atributs. El camp <strong>Survived</strong> nomÃƒÂ©s estÃƒÂ  informat per les entrades del fitxer dÃ¢â‚¬â„¢entrenament (fins la posiciÃƒÂ³ 891). En la resta dÃ¢â‚¬â„¢entrades, el valor en N.A.</p>
+
+<pre><code class="r">dim (dades)
+</code></pre>
+
+<pre><code>## [1] 1309   12
+</code></pre>
+
+<p>La comanda str(dades) presenta de forma compacta lÃ¢â‚¬â„¢estructura interna del dataset. </p>
+
+<pre><code class="r">str(dades)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    1309 obs. of  12 variables:
+##  $ PassengerId: int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ Survived   : int  0 1 1 1 0 0 0 0 1 1 ...
+##  $ Pclass     : int  3 1 3 1 3 3 1 3 3 2 ...
+##  $ Name       : chr  &quot;Braund, Mr. Owen Harris&quot; &quot;Cumings, Mrs. John Bradley (Florence Briggs Thayer)&quot; &quot;Heikkinen, Miss. Laina&quot; &quot;Futrelle, Mrs. Jacques Heath (Lily May Peel)&quot; ...
+##  $ Sex        : chr  &quot;male&quot; &quot;female&quot; &quot;female&quot; &quot;female&quot; ...
+##  $ Age        : num  22 38 26 35 35 NA 54 2 27 14 ...
+##  $ SibSp      : int  1 1 0 1 0 0 0 3 0 1 ...
+##  $ Parch      : int  0 0 0 0 0 0 0 1 2 0 ...
+##  $ Ticket     : chr  &quot;A/5 21171&quot; &quot;PC 17599&quot; &quot;STON/O2. 3101282&quot; &quot;113803&quot; ...
+##  $ Fare       : num  7.25 71.28 7.92 53.1 8.05 ...
+##  $ Cabin      : chr  &quot;&quot; &quot;C85&quot; &quot;&quot; &quot;C123&quot; ...
+##  $ Embarked   : chr  &quot;S&quot; &quot;C&quot; &quot;S&quot; &quot;S&quot; ...
+</code></pre>
+
+<p>Amb la comanda </p>
+
+<pre><code class="r">factors&lt;-c(&#39;Sex&#39;,&#39;Embarked&#39;)
+dades[factors] &lt;- lapply(dades[factors], function(x) as.factor(x))
+</code></pre>
+
+<p>sÃ¢â‚¬â„¢indica al dataset que els camps <strong>Pclass</strong>, <strong>Sex</strong> i <strong>Embarked</strong> sÃƒÂ³n factors. Al aplicar de nou la funciÃƒÂ³ str(dades) es pot observar que ara es consideren factors i es mostren els possibles valors que admeten.</p>
+
+<pre><code class="r">str(dades)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    1309 obs. of  12 variables:
+##  $ PassengerId: int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ Survived   : int  0 1 1 1 0 0 0 0 1 1 ...
+##  $ Pclass     : int  3 1 3 1 3 3 1 3 3 2 ...
+##  $ Name       : chr  &quot;Braund, Mr. Owen Harris&quot; &quot;Cumings, Mrs. John Bradley (Florence Briggs Thayer)&quot; &quot;Heikkinen, Miss. Laina&quot; &quot;Futrelle, Mrs. Jacques Heath (Lily May Peel)&quot; ...
+##  $ Sex        : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 2 1 1 1 2 2 2 2 1 1 ...
+##  $ Age        : num  22 38 26 35 35 NA 54 2 27 14 ...
+##  $ SibSp      : int  1 1 0 1 0 0 0 3 0 1 ...
+##  $ Parch      : int  0 0 0 0 0 0 0 1 2 0 ...
+##  $ Ticket     : chr  &quot;A/5 21171&quot; &quot;PC 17599&quot; &quot;STON/O2. 3101282&quot; &quot;113803&quot; ...
+##  $ Fare       : num  7.25 71.28 7.92 53.1 8.05 ...
+##  $ Cabin      : chr  &quot;&quot; &quot;C85&quot; &quot;&quot; &quot;C123&quot; ...
+##  $ Embarked   : Factor w/ 4 levels &quot;&quot;,&quot;C&quot;,&quot;Q&quot;,&quot;S&quot;: 4 2 4 4 4 3 4 4 4 2 ...
+</code></pre>
+
+<p>La comanda summary(dades) mostra una visiÃƒÂ³ general dels atributs i en el cas de factors, es presenten els valors possibles i el nombre dÃ¢â‚¬â„¢ocurrÃƒÂ¨ncies per cada valor. A mÃƒÂ©s, es pot observar que hi ha diversos valors mal informats o buits. </p>
+
+<pre><code class="r">summary (dades)
+</code></pre>
+
+<pre><code>##   PassengerId      Survived          Pclass          Name          
+##  Min.   :   1   Min.   :0.0000   Min.   :1.000   Length:1309       
+##  1st Qu.: 328   1st Qu.:0.0000   1st Qu.:2.000   Class :character  
+##  Median : 655   Median :0.0000   Median :3.000   Mode  :character  
+##  Mean   : 655   Mean   :0.3838   Mean   :2.295                     
+##  3rd Qu.: 982   3rd Qu.:1.0000   3rd Qu.:3.000                     
+##  Max.   :1309   Max.   :1.0000   Max.   :3.000                     
+##                 NA&#39;s   :418                                        
+##      Sex           Age            SibSp            Parch      
+##  female:466   Min.   : 0.17   Min.   :0.0000   Min.   :0.000  
+##  male  :843   1st Qu.:21.00   1st Qu.:0.0000   1st Qu.:0.000  
+##               Median :28.00   Median :0.0000   Median :0.000  
+##               Mean   :29.88   Mean   :0.4989   Mean   :0.385  
+##               3rd Qu.:39.00   3rd Qu.:1.0000   3rd Qu.:0.000  
+##               Max.   :80.00   Max.   :8.0000   Max.   :9.000  
+##               NA&#39;s   :263                                     
+##     Ticket               Fare            Cabin           Embarked
+##  Length:1309        Min.   :  0.000   Length:1309         :  2   
+##  Class :character   1st Qu.:  7.896   Class :character   C:270   
+##  Mode  :character   Median : 14.454   Mode  :character   Q:123   
+##                     Mean   : 33.295                      S:914   
+##                     3rd Qu.: 31.275                              
+##                     Max.   :512.329                              
+##                     NA&#39;s   :1
+</code></pre>
+
+<h1>3. Neteja de les dades.</h1>
+
+<h2>3.1 Les dades contenen zeros o elements buits? Com gestionaries aquests casos?</h2>
+
+<p>Es pot observar que hi ha 418 valors no informats de Survived que corresponen als valors del fitxer de test, 263 registres no presents a <strong>Age</strong>, 1 registre  que no informa el <strong>Fare</strong> i 2 registres que no indiquen el camp Embarked. Addicionalment hi ha diversos registres de <strong>Fare</strong> amb valor 0. Es procedeix a aplicar diverses tÃƒÂ¨cniques per completar aquestes dades. </p>
+
+<ul>
+<li>  Per intentar determinar el valor de la tarifa (<strong>Fare</strong>) que manca, el primer que es fa ÃƒÂ©s identificar el registre mal informat</li>
+</ul>
+
+<pre><code class="r">IdNoFare &lt;- dades$PassengerId[is.na(dades$Fare)]
+dades[IdNoFare,]
+</code></pre>
+
+<pre><code>##      PassengerId Survived Pclass               Name  Sex  Age SibSp Parch
+## 1044        1044       NA      3 Storey, Mr. Thomas male 60.5     0     0
+##      Ticket Fare Cabin Embarked
+## 1044   3701   NA              S
+</code></pre>
+
+<p>SÃ¢â‚¬â„¢observa que es tracta dÃ¢â‚¬â„¢un passatger de classe 3 i que va embarcar a Ã¢â‚¬ËœSÃ¢â‚¬â„¢. Es calcula el preu mitja de la tarifa dÃ¢â‚¬â„¢aquest tipus de clients i sÃ¢â‚¬â„¢assigna a la tarifa del passatger no informat. El cÃƒÂ lcul de la mitjana no tÃƒÂ© en compte els valors NA (parÃƒÂ metre na.rm = TRUE)</p>
+
+<pre><code class="r">dades$Fare[is.na(dades$Fare)] &lt;- median(dades[dades$Pclass == &#39;3&#39; &amp; dades$Embarked == &#39;S&#39;, ]$Fare, na.rm = TRUE)
+dades[IdNoFare,]
+</code></pre>
+
+<pre><code>##      PassengerId Survived Pclass               Name  Sex  Age SibSp Parch
+## 1044        1044       NA      3 Storey, Mr. Thomas male 60.5     0     0
+##      Ticket Fare Cabin Embarked
+## 1044   3701 8.05              S
+</code></pre>
+
+<p>El valor assignat ÃƒÂ©s 8,05 $</p>
+
+<ul>
+<li>  Per intentar determinar el valor de lÃ¢â‚¬â„¢Embarked que manca, el primer que es fa ÃƒÂ©s identificar els registres mal informats</li>
+</ul>
+
+<pre><code class="r">IdNoEmbarked &lt;- dades$PassengerId[dades$Embarked == &#39;&#39;]
+dades[IdNoEmbarked,]
+</code></pre>
+
+<pre><code>##     PassengerId Survived Pclass                                      Name
+## 62           62        1      1                       Icard, Miss. Amelie
+## 830         830        1      1 Stone, Mrs. George Nelson (Martha Evelyn)
+##        Sex Age SibSp Parch Ticket Fare Cabin Embarked
+## 62  female  38     0     0 113572   80   B28         
+## 830 female  62     0     0 113572   80   B28
+</code></pre>
+
+<p>SÃ¢â‚¬â„¢observa que es tracta de passatgers de classe 1 amb una tarifa de 80 $. Per determinar el port dÃ¢â‚¬â„¢embarcament es calcula la tarifa mitjana per a la classe 1, per cada tipus dÃ¢â‚¬â„¢embarcament possible.</p>
+
+<pre><code class="r">median(dades[dades$Pclass == &#39;1&#39; &amp; dades$Embarked == &#39;S&#39;, ]$Fare, na.rm = TRUE)
+</code></pre>
+
+<pre><code>## [1] 52
+</code></pre>
+
+<pre><code class="r">median(dades[dades$Pclass == &#39;1&#39; &amp; dades$Embarked == &#39;Q&#39;, ]$Fare, na.rm = TRUE)
+</code></pre>
+
+<pre><code>## [1] 90
+</code></pre>
+
+<pre><code class="r">median(dades[dades$Pclass == &#39;1&#39; &amp; dades$Embarked == &#39;C&#39;, ]$Fare, na.rm = TRUE)
+</code></pre>
+
+<pre><code>## [1] 76.7292
+</code></pre>
+
+<p>SÃ¢â‚¬â„¢observa que la tarifa mitjana mÃƒÂ©s propera a la dels registres no informats ÃƒÂ©s 76,73 $ corresponent a lÃ¢â‚¬â„¢embarcament Ã¢â‚¬ËœCÃ¢â‚¬â„¢. SÃ¢â‚¬â„¢assigna aquest valor als registres mal informats.</p>
+
+<pre><code class="r">dades$Embarked[c(IdNoEmbarked)] &lt;- &#39;C&#39;
+</code></pre>
+
+<ul>
+<li>  Donat que el nombre de valors <strong>Age</strong> no informats ÃƒÂ©s elevat, la opciÃƒÂ³ dÃ¢â‚¬â„¢esborrar aquests valors suposaria la pÃƒÂ¨rdua de molts registres que si contenen altres valors i que ÃƒÂ©s interessant conservar. Per aquest motiu, sÃ¢â‚¬â„¢utilitzarÃƒÂ  la llibreria mice (Multivariate Imputations by Chained Equations) que implementa un mÃƒÂ¨tode per tractar valors no informats, creant mÃƒÂºltiples imputacions per dades no informades multivariable. Cada variable incompleta es pot imputar per un model separat, permetent la imputaciÃƒÂ³ de barreges de dades de diversos tipus (categÃƒÂ²riques, continues, binaries, &hellip;) i mantenir la coherÃƒÂ¨ncia entre les imputacions mitjanÃƒÂ§ant la implantaciÃƒÂ³ passiva. </li>
+</ul>
+
+<p>SÃ¢â‚¬â„¢aplica la funciÃƒÂ³ mice a un subconjunt dels camps del dataset, no es contemplen els camps <strong>PassengerId</strong>, <strong>Name</strong>, <strong>Ticket</strong>, <strong>Cabin</strong>, <strong>Survived</strong> perquÃƒÂ¨ no aporten res al model i es simplifiquen els cÃƒÂ lculs</p>
+
+<pre><code class="r">library(&#39;mice&#39;)
+library(&#39;randomForest&#39;)
+set.seed(1000) 
+dadesAge &lt;- complete(mice(dades[, !names(dades) %in% c(&#39;PassengerId&#39;,&#39;Name&#39;, &#39;Ticket&#39;, &#39;Cabin&#39;, &#39;Survived&#39;)], method=&#39;rf&#39;))
+</code></pre>
+
+<pre><code>## 
+##  iter imp variable
+##   1   1  Age
+##   1   2  Age
+##   1   3  Age
+##   1   4  Age
+##   1   5  Age
+##   2   1  Age
+##   2   2  Age
+##   2   3  Age
+##   2   4  Age
+##   2   5  Age
+##   3   1  Age
+##   3   2  Age
+##   3   3  Age
+##   3   4  Age
+##   3   5  Age
+##   4   1  Age
+##   4   2  Age
+##   4   3  Age
+##   4   4  Age
+##   4   5  Age
+##   5   1  Age
+##   5   2  Age
+##   5   3  Age
+##   5   4  Age
+##   5   5  Age
+</code></pre>
+
+<pre><code>## Warning: Number of logged events: 25
+</code></pre>
+
+<p>MitjanÃƒÂ§ant la comparaciÃƒÂ³ visual de plots sobre lÃ¢â‚¬â„¢<strong>Age</strong> original i el estimat, es pot verificar que la assignaciÃƒÂ³ de les edats no informades no introdueix biaixos en les dades. </p>
+
+<pre><code class="r">par(mfrow=c(1,2))
+hist(dades$Age, freq=F, main=&#39;Age: Original&#39;, col=&#39;red&#39;, ylim=c(0,0.05))
+hist(dadesAge$Age, freq=F, main=&#39;Age: Estimat&#39;, col=&#39;blue&#39;, ylim=c(0,0.05))
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAxlBMVEUAAAAAADoAAGYAAP8AOjoAOmYAOpAAZpAAZrY6AAA6ADo6AGY6OgA6OmY6OpA6ZpA6ZrY6kNtmAABmADpmAGZmOgBmOjpmOpBmZmZmkLZmkNtmtttmtv+QOgCQOjqQOmaQZgCQZjqQZmaQZpCQtmaQ27aQ29uQ2/+2ZgC2Zjq2kGa2ttu225C227a22/+2/7a2///bkDrbkGbbtmbbtpDb25Db2//b/7bb/9vb////AAD/tmb/tpD/25D/27b//7b//9v///80taN8AAAACXBIWXMAAAsSAAALEgHS3X78AAAQ7UlEQVR4nO2dgXrbthVG6SxxrbZzI6Vpu1VO22Wr1G1NrbVrpmmKpPd/qREkZckxRUAAQeHinvM1ny3zoubPQ5AgLQrFDlRSXHoF4DIgXimIVwrilYJ4pSBeKYhXCuKVgnilIF4piFcK4pWCeKUgXimIVwrilYJ4pSBeKYhXCuKVgnilIF4piFcK4pWCeKXEF7+9K24sJR++Korii3f7l5vJs/td64vOHyaJNf1mUhiuZocmP01PBzQLeyG++PWosFgqKz7KbkOOeGv6p+LnRYfbzoXnEF/8ovimWtntD8WLnyfXy93276Pi6tuDvbJTvCx/+lNxvdzeXX0zevazWbAvN1Xbu2d/HRUvykPC+nVRvJgJEm9NvzE/rPjf52W2d+XWKIobs3RVfFI2uv/X6Gq6D14v7GXFoosvpf1zdFPpLYrnozLlvNrFxw/R16Mqeim9Dnb9vnLdlG/2L0ziunvUP4y94r1gT/8gvsn2nyPxhuflv2f3jxb2smbRxa9HN2X6+/Lrs1m5/18vS8/vdh+OzK2aKOVRrD4jmtQP5Y348e7Xot5C64nZDkLE29M3h/pqSb0HmKN5Lf7Zu/JM8e1mUp8HTHBBh/pFuabm36pWer2sd+Sjk9oj8ebHdeqmvBZ/Nau7xva3v3xeCBJvT/8g3hwUnv/p92PxN7uH9E1wOeIfjtKnoz861J8QX0Y2Lz5MXvzjvaAe75D+cI7f/fbDg9uD+GrgM9sHlyO+GbEfHburg90x5db55Pfddl4P7math/pG/KJ4uft1JEe8Q/oj8eWm+L702iZ+H1yO+EV5dt6fvh8Nb45GaIfLuYP4jwZ3jfhVsx2liHdI3xzqi+k+m6m4+Vj8o4W9rFpk8WVgs4cuTIbXxYtfqvP0T6XoL5ZH12Qffmhu4BzEP5Q/El9e8139uTxnChHvkv5B/O63z6tLVdMPbt5/JH4fvFq4tPxaJwa7Zbs2l6P7kXnv5amTXpzBxDfjnHGc8tRJL85wf6T58KY8jb903uXPLE+d5OLw1zmlIF4piFcK4pWCeKUgXimIVwrilYJ4pSBeKYhXCuKVgnilIF4piFcK4pWCeKUgXimIVwrilYJ4pSBeKVbxmy/vq6c9EnoWYDByzu4i3uTfrV8OsTppkXN2F/Hr22W992sj5+x28ZOrH78ze/1thsc7CzlndxjcVZ9PshLxeGrv5JudUb1SEK8Uu/iHj/MYYG1SI+PsVvHbu/pDV1Y5XsxayDm70w2c46+ayDk7Pb6DnLPbz/HNp/McneeKPTFXLAkyzh4SQHz4AMRnR7wf4rM7B2gZ4IgP70qO2enxfojPjng/xGcPuXMnPryVjLOHXMeLD28j5+whd+7Eh7eRc3Z6fAc5Z/e5c+feVjoZZ2dU74f47Ij3Q3x2xPshPjvi/RCfHfF+iM+OeD/EZ0e8H+KzI94P8dkR74f47Ij3Q3x2xPshPjvi/RCfHfF+iM+OeD/EZ0e8H+KzI94P8dkR74f47Ij3Q3x2xPshPjvi/RCfHfF+iM+OeD/EZ0e8H+KzI94P8dkR74f47Ij3Q3x2xPshPjvi/RCfHfF+iM+OeD/EZ0e8H+KzI94P8dkR74f47Ij3Q3x2xPshPjvi/RCfHfF+iM+OeD/EZ0e8H+KzI94P8dkR74f47Ij3Q3x2xPshPjvi/RCfHfF+iM+OeD/EZ0e8H+KzOwZYf9Yyu6r48G7kmd0aoPms/rZP6xcf3kbO2e0BNpMydp57vZWMs7sE2Eyu/51leAeyze4WYD1qmZZFfngnMs3OqN4P8dkR74f47PYAGU+zaSXj7NYAOU+6ZyPn7Pbr+Iyn2bSRc3Z6fAc5Z3e5gfPxea7YE3PFkiDj7Izq/RCfHfF+iM/uHCDHAY4rOWanx/shPjvi/RCfnTt3XWScnev4DnLOzp27DnLOTo/vIOfsPnfu3NtKp5fsRZHi7T5G9X6cI/4Pe1LaYIj3A/FKQbxSEK8UxCsF8UpBvFIQ71ia5E2MABDvWPrfPSmFDwDxjqWIR3wWIN6xFPGIzwLEO5YiHvFZgHjHUsQjPgsQ71iKeMRnAeIdSxGP+CxAvGMp4hGfBYh3LEU84rMA8Y6liEd8FiDesRTxiM8CxDuWIh7xWYB4x1LEIz4LEO9YinjEZwHiHUsRj/gsQLxjKeIRnwWIdyxFPOKzAPGOpYhHfBYg3rEU8YjPAsQ7lh7E5/HxVwrEr0fFeB78me0H8ZK6fj/ZD+IT2umtq2BmaZiXyde3IbM0yBTfU/aD+IS6vnUVzHwsq3HovCwyxfeUXab4/bwsWnu8QWWP320mJv1C5Tm+n+xCxffSVqj40yDesRTx4sT3Ms2mUPH9ZJcpvp9J92SK7ym7TPH9TLMpU3xP2WWKp8cr7fEt02x63HiUKb6n7ELF99JWqPjTIN6xFPFSxWsc3O1RObjrp61s8S0g3rEU8eLEc+eOO3fntj0qFSle9XU8d+6UDu7o8Up7fMvdK/e2h1KR4nvKLlR8L22Fij8N4h1LEY94xCNeLpmI30xuvNu6laYrPn72hMWXVyxFcTXzbOtSmq74+NmTFr8zV61FMfVsay1NWfwucvakxa9HZq9vuUXl0NalNGXxsbMnLH4zeXpvyrWtW2m64uNnT1l8tbeft89nIz569mTFNzcmi+LMXT8H8UNkT1b8+fv7cVu30lTFD5E9YfHR2yYs3o8sxG++/OXkX6FsbV1LUxUfL/vhc0+SFT9A22TF++Ig/oluxCN+gDW0rV79ZXG9XJx57yob8ZGyixC/eTUr/1t/pu8cHy+7DPFf3pf7vVLxkbKLEL9bFFezldZDfZzsMsRHanu4pElYvBeI7654ohvxaYlfRbqJIUF8rOwSxNcf5OfXtrNCgPho2UWIj/SHChHiY2WXIH43H/u37aoQID5adgniTz8qZG/bWSFAfLTsEsTHaitBvB+I765AfOLit3fF9ftXZ765PBPxsbJLEL+9G69vly2PgTu07awQID5adgniy0uaMnz/7zSVID5adgni671+objHR8guQXz1CNG57zDORHy07CLER2orQrwXgeIvPwEd4v0IFH/5rl//5uqD/M68d5WL+GjZBYhfVY+Hr0f9vwslffHxsqcvfvumvnvRMq+eta2lInnxEbOnL77jAxytbS0VyYuPmB3xiEc84pMSv39GXOHf4yNmT198vLbpi/cF8d0VXeIvf/cqAMR3V3SJF931Ed9dgXi54utPgfObpUG6+KDswsWbWRq2d2OV4sOyCxdfh57faBQfll24+GZelsXzpw+QZy8+LLtw8bvNpHrSZPH0Dkf24sOySxcf0la6+NMgvrsC8XLFh0yzKV18UHbh4oMm3RMuPiy7cPFB02wKFx+WXbh4erzSHt/y/Lj7n9WEiw/LLl18SFvp4k+D+O4KxIsXr3Fwt0fl4C6obSbiW0B8dwXi5Yrnzh137s5tK1286ut47txFHdxd7L3G9PgOBujxh2X9r3736lkrTn/yY/biw7JLFx/SVrr40yC+u8JJvMRnahDfXeEk/rAsYGUGBvHdFYhHPOIRj3jEIx7xiB8SxPuB+O4KxCMe8YhHPOIRj3jEDwni/UB8dwXiEY94xCMe8YhHPOKHBPF+IL67AvGIRzziEY94xCMe8UOCeD8Q312BeMQjHvGIRzziEY/4IUlLvJznpfsXP3D2tMTL6fr9ix+46yPeD8R3VyAe8YhHPOIRj3jEIx7xiI8O4v1AfHcF4hGPeMQjHvGIRzziEZ/+B1rnL775rP62T+uPKP7wI89cvRCWXbj43fZu7N1WuPiw7NLF7zavZr5tpYsPyi5efEBb8eJPgvjuCsTLFW+bbbFrAC5dfPyZJtMVb517reviW7j4Qeede/hmmEtZ++WcbbbFjMUPMNNkx7K4fZ8e38Flenwi4ltmW3x8KMpYvDV7F+LF29rmLP40iEf8qYpMxGsc3O05nb3rUjYT8SfbKhDfQpO9wxHiES9TvPXOXcbirdkzFs91fFf2jMVz564re8bi6fFKe3zL3avHbTMWb8+es3hb25zFnwbxiEd8SwXiEY94xCMe8YhHPOIRj3jEB6xfTBCPeMS3VCAe8Z7iE31QHvGxxSfa9RGPeMS3VCAe8YhHPOLdxMcc2CLej0HEx+z6iPcD8Udynx6ZEK9C/NM9APG6xLuZRDzi5YtvAfEaxJ9pEvHu5Wn9uQbxg4k//Kif5GEgHvGIRzzio4pP4WQ/rPgIkSWKf/imn00Qkn0g8Ycf9bYHID4o++DiH77pJ0BQeMQjHvGIRzziEY94xCMe8YhHPOIRj3jEIx7xiEc84hEfHCAoPOIRj3jEIx7xiBcp3n1OmvzEu89Jk5/4M2aoyE78GTNU5Cf+jDlpshN/xpw0+Ymnxyvt8WfMSZOd+DPmpMlQvK1tzuKt2RF/EfEthG6PM7NfTnxoYtGXcy3LPDeDb/bLiX+6B5yXXfTgLrb4lAd3LcvO2gNEX861LOv1mJ/y5VzXMpdsufX4h29cwodnz1h8yyXN417VNsRKAJfwmrNf8pIILgjileIsvmWAo4Ycs9PjlYJ4pYTcucufjLOHXMdnT87ZQ+7cZU/O2enxHeScPeSNGPmTcXZG9UpBvFIQr5Rw8Zf5A5SVHrZN1tl7EN/fr+mxaiDxvRUNnh3xIQjOjvgQBGdHfAiCsyM+BMHZER+C4OyID0Fwdm7gKAXxSkG8UhCvFMQrBfFKQbxSEK8UxCsF8UoJFL+ZFJa3HpuHUaYOhdVbmS1V27viamarKn+heVesfc1CkZ09TLxZ48VNV8Xm1Wy3/nRmL1yUm8hWNZ+at7h3V5lfuLAV9YHw7GHizSMm68+63nW+Miswn1oL1398PbX975oHWrqr1rdLU2Ffs1CEZw8TX/2mcjfrpqywFW7f/Fjuppaq9e335nDXXdXs9W5rFoLw7GHizbNF1l+xvRtbCxdjc3yyVK1H1faxVNUnOKc1C0J49vg9fjMZWwvLxVuXvX5p70HlSXW3enafRo9POHvsc3y1q1oLF9Xbwce289zXVaDuqmZ3T+Ecn3T20FH92DJ+rLM7FJq93lY1n9b9o6uq2evtvzAU4dljX8fX+/O0n2vZcrH9MnVVOFzw9oHs7Ny5UwrilYJ4pSBeKYhXCuKVgnilIF4piFcK4pWCeKUgXimIVwrilYJ4pSBeKYhXCuKVgnilIF4pg4vfz/PS9sqwqt6fuIv8pvghsSVujRp9M6Qmfv3pj2/fm+fEVt+MB12veFjFt0SNvxmGFb+ZFC9eT48eHzavmjcOr6pJf9a3/3lr3hm8ffO3r5d1yVezfYlA7Ilbo8bfDMOKn4/LtNPq8eHP7ptX5svipnrexHyZfFslXt8u59O6wdWsKZGIPXFr1PibYVDxJmpzqGue5i1fmY1iXu1PZvOiGJsnCc1TxlXJm1lTMuSq9oRL4vaosTfDoOKrB7qqPdgc5JpX1dxu5gngUfUUyG779v1kur0rqpLbZZW4KZGHQ+ITUWNvhkv0+M1karbI/tVhH15dL1c327fL+dhEbT5TwCQW2dsNDolbo8bfDJc4x5sd3zzfdzjjGeP1g92bV+Vw9tVsYY6O5UHucHITOs2nPXFr1PibYVjx5aHLjGoXRfWleVUewczxa16Pcavx7/Y7s2+bJ34nxSdvZvsSgVgTn4gafTOkd+du+/bxPh33KfekOI4aezOkJ/4YM7gR2tXPpStqjM2QtniIBuKVgnilIF4piFcK4pWCeKUgXimIVwrilYJ4pSBeKYhXCuKVgnilIF4p/wdXfoCQudbsxwAAAABJRU5ErkJggg==" alt="plot of chunk unnamed-chunk-13"/></p>
+
+<pre><code class="r">dades$Age &lt;- dadesAge$Age 
+summary (dades)
+</code></pre>
+
+<pre><code>##   PassengerId      Survived          Pclass          Name          
+##  Min.   :   1   Min.   :0.0000   Min.   :1.000   Length:1309       
+##  1st Qu.: 328   1st Qu.:0.0000   1st Qu.:2.000   Class :character  
+##  Median : 655   Median :0.0000   Median :3.000   Mode  :character  
+##  Mean   : 655   Mean   :0.3838   Mean   :2.295                     
+##  3rd Qu.: 982   3rd Qu.:1.0000   3rd Qu.:3.000                     
+##  Max.   :1309   Max.   :1.0000   Max.   :3.000                     
+##                 NA&#39;s   :418                                        
+##      Sex           Age            SibSp            Parch      
+##  female:466   Min.   : 0.17   Min.   :0.0000   Min.   :0.000  
+##  male  :843   1st Qu.:21.00   1st Qu.:0.0000   1st Qu.:0.000  
+##               Median :28.00   Median :0.0000   Median :0.000  
+##               Mean   :29.74   Mean   :0.4989   Mean   :0.385  
+##               3rd Qu.:38.00   3rd Qu.:1.0000   3rd Qu.:0.000  
+##               Max.   :80.00   Max.   :8.0000   Max.   :9.000  
+##                                                               
+##     Ticket               Fare            Cabin           Embarked
+##  Length:1309        Min.   :  0.000   Length:1309         :  0   
+##  Class :character   1st Qu.:  7.896   Class :character   C:272   
+##  Mode  :character   Median : 14.454   Mode  :character   Q:123   
+##                     Mean   : 33.276                      S:914   
+##                     3rd Qu.: 31.275                              
+##                     Max.   :512.329                              
+## 
+</code></pre>
+
+<ul>
+<li>  En el camp <strong>Fare</strong> sÃ¢â‚¬â„¢observen diversos valors a 0 que es considera un valor fals, que correspon a valors no informats. Per estimar-los sÃ¢â‚¬â„¢utilitza lÃ¢â‚¬â„¢algoritme kNN. En primer lloc es substitueix els valors 0 per NA, ja que lÃ¢â‚¬â„¢algoritme nomÃƒÂ©s estima els valors NA del dataset. A continuaciÃƒÂ³ sÃ¢â‚¬â„¢aplica lÃ¢â‚¬â„¢algoritme i sÃ¢â‚¬â„¢obtenen valors pels valors no informats de <strong>Fare</strong>.</li>
+</ul>
+
+<pre><code class="r"># Els valors 0 de Fare es converteixen en NA i es dedueixen amb l&#39;algoritme KNN
+dades$Fare[dades$Fare == 0] &lt;- NA
+
+# Es Comprova si hi ha NA,s a Fare
+sapply(dades, function(x) sum(is.na(x)))
+</code></pre>
+
+<pre><code>## PassengerId    Survived      Pclass        Name         Sex         Age 
+##           0         418           0           0           0           0 
+##       SibSp       Parch      Ticket        Fare       Cabin    Embarked 
+##           0           0           0          17           0           0
+</code></pre>
+
+<p>SÃ¢â‚¬â„¢observa que al <strong>Fare</strong> hi ha 17 registres no informats.</p>
+
+<pre><code class="r">library(VIM)
+
+# S&#39;aplica l&#39;algoritme kNN
+dades.kNN &lt;- kNN(dades[, !names(dades) %in% c(&#39;PassengerId&#39;,&#39;Name&#39;, &#39;Ticket&#39;, &#39;Cabin&#39;, &#39;Survived&#39;)])
+
+# Es comprova si hi ha NA,s a Fare estimat
+sapply(dades.kNN, function(x) sum(is.na(x)))
+</code></pre>
+
+<pre><code>##       Pclass          Sex          Age        SibSp        Parch 
+##            0            0            0            0            0 
+##         Fare     Embarked   Pclass_imp      Sex_imp      Age_imp 
+##            0            0            0            0            0 
+##    SibSp_imp    Parch_imp     Fare_imp Embarked_imp 
+##            0            0            0            0
+</code></pre>
+
+<pre><code class="r"># Es comprova si hi ha zeros a Fare estimat
+length(dades.kNN$Fare[dades.kNN$Fare == 0])
+</code></pre>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<pre><code class="r"># S&#39;assignen els valors de Fare estimats amb kNN al dataset original
+dades$Fare = dades.kNN$Fare
+</code></pre>
+
+<ul>
+<li>  Per millorar el dataset es planteja la creaciÃƒÂ³ de nous camps a partir de les dades disponibles :</li>
+</ul>
+
+<p>En primer lloc es crea el camp <strong>TamanyFamilia</strong> format a partir de la suma dels camps <strong>SibSp</strong> i <strong>Parch</strong> (cÃƒÂ²njuges, germans, pares i fills) mÃƒÂ©s el propi passatger.</p>
+
+<pre><code class="r"># CreaciÃƒÂ³ del camp TamanyFamilia
+dades$TamanyFamilia &lt;- dades$SibSp + dades$Parch + 1
+</code></pre>
+
+<p>A partir dÃ¢â‚¬â„¢aquest camp es crea el camp <strong>TipusFamilia</strong>, de tipus factor, format a partir de rangs de nombre de membres de la famÃƒÂ­lia embarcats.</p>
+
+<pre><code class="r"># CreaciÃƒÂ³ del camp TipusFamilia
+dades$TipusFamilia[dades$TamanyFamilia == 1] &lt;- &#39;solitari&#39;
+dades$TipusFamilia[dades$TamanyFamilia &lt; 5 &amp; dades$TamanyFamilia &gt; 1] &lt;- &#39;petita&#39;
+dades$TipusFamilia[dades$TamanyFamilia &gt; 4] &lt;- &#39;nombrosa&#39;
+
+# ConversiÃƒÂ³ a factor
+dades$TipusFamilia &lt;- as.factor(dades$TipusFamilia)
+</code></pre>
+
+<p>TambÃƒÂ© a partir del camp Age es crea el camp <strong>TipusEdat</strong>, de tipus factor, format a partir de rangs dÃ¢â‚¬â„¢edats.</p>
+
+<pre><code class="r"># Es crea el camp TipusEdat en funciÃƒÂ³ de franges d&#39;edat i es converteix en factor
+
+dades$TipusEdat[dades$Age &lt; 18] &lt;- &#39;Menor&#39; 
+dades$TipusEdat[dades$Age &gt;= 18 &amp; dades$Age &lt;= 65] &lt;- &#39;Adult&#39;
+dades$TipusEdat[dades$Age &gt; 65] &lt;- &#39;AnciÃƒÂ &#39;
+dades$TipusEdat &lt;- as.factor(dades$TipusEdat)
+</code></pre>
+
+<p>En funciÃ³ del tipus de metodologies i algoritmes a utilitzar es pot prioritzar l&#39;Ãºs d&#39;atributs numÃ¨rics com en el cas d&#39;<strong>Age</strong> o <strong>TamanyFamilia</strong>, o be, atributs de tipus factor com sÃ³n <strong>TipusEdat</strong> o <strong>TipusFamilia</strong>, calculats a partir dels camps numÃ¨rics. TambÃ© s&#39;ha descartat l&#39;Ãºs del camp <strong>Ticket</strong> per que presenta una estructura bastant variable, no segueix un patrÃ³ i correspon en gran part a codis de ticket autonumÃ¨rics que s&#39;han considerats que aporten poca informaciÃ³ per a la questiÃ³ plantejada. El camp <strong>Cabin</strong> tambÃ© s&#39;ha descartat perquÃ©, si be era un camp que potencialment podria aportar informaciÃ³ rellevant respecte a la supervivÃ¨ncia en funciÃ³ de les cabines, per exemple, degut a la seva ubicaciÃ³, el nombre de valors no informats Ã©s molt elevat (mÃ©s de 4/5 parts) el que fa poc recomanble el completar els valors no informats mitjanÃ§ant les tÃ¨cniques aplicades en altres casos. 
+Finalment s&#39;ha utilitzar el camp TamanyFamilia, enlloc dels camps SibSp i Parch, ja que n&#39;Ã©s l&#39;agrupaciÃ³ d&#39;ambos, reduint la dimensionalitat del dataset. S&#39;han mantinut els camps <strong>PassengerId</strong> i <strong>Name</strong> per claredat ja que no aporten valor a la identificaciÃ³ de la supervivÃ¨ncia.</p>
+
+<p>Per tant el dataset final, integrat i filtrat ÃƒÂ©s el segÃƒÂ¼ent :</p>
+
+<pre><code class="r">#dataset final integrat i filtrat 
+dades = dades[, !names(dades) %in% c(&#39;SibSp&#39;,&#39;Parch&#39;, &#39;Ticket&#39;, &#39;Cabin&#39;, &#39;TipusFamilia&#39;, &quot;TipusEdat&quot;)]
+summary (dades)
+</code></pre>
+
+<pre><code>##   PassengerId      Survived          Pclass          Name          
+##  Min.   :   1   Min.   :0.0000   Min.   :1.000   Length:1309       
+##  1st Qu.: 328   1st Qu.:0.0000   1st Qu.:2.000   Class :character  
+##  Median : 655   Median :0.0000   Median :3.000   Mode  :character  
+##  Mean   : 655   Mean   :0.3838   Mean   :2.295                     
+##  3rd Qu.: 982   3rd Qu.:1.0000   3rd Qu.:3.000                     
+##  Max.   :1309   Max.   :1.0000   Max.   :3.000                     
+##                 NA&#39;s   :418                                        
+##      Sex           Age             Fare         Embarked TamanyFamilia   
+##  female:466   Min.   : 0.17   Min.   :  3.171    :  0    Min.   : 1.000  
+##  male  :843   1st Qu.:21.00   1st Qu.:  7.925   C:272    1st Qu.: 1.000  
+##               Median :28.00   Median : 14.500   Q:123    Median : 1.000  
+##               Mean   :29.74   Mean   : 33.644   S:914    Mean   : 1.884  
+##               3rd Qu.:38.00   3rd Qu.: 31.387            3rd Qu.: 2.000  
+##               Max.   :80.00   Max.   :512.329            Max.   :11.000  
+## 
+</code></pre>
+
+<p>El diccionari de dades del dataset final, integrat i filtrat ÃƒÂ©s el segÃƒÂ¼ent :</p>
+
+<table border=1>
+
+<th> Variable </th>
+<th> DescripciÃƒÂ³ </th>
+<th> Tipus </th>
+<th> Valors </th>
+
+<tr>
+<td>PassangerId</td>
+<td>Identificador de passatger</td>
+<td>Enter</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Survival</td>
+<td>Identificador de supervivÃƒÂ¨ncia</td>
+<td>Factor</td>
+<td>0 = No, 1 = Yes</td>
+</tr>
+
+<tr>
+<td>Pclass</td>
+<td>Classe del passatge </td>
+<td>Factor</td>
+<td>1 = 1a, 2 = 2ona, 3 = 3Ã‚Âª </td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>Nom del passatger</td>
+<td>Text</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Sex</td>
+<td>Sexe</td>
+<td>Factor</td>
+<td>1 = male, 2 = female</td>
+<td></td>
+</tr>
+<tr>
+<td>Age</td>
+<td>Edat en anys</td>
+<td>Nombre</td>
+<td></td>
+</tr>
+<tr>
+<td>Fare</td>
+<td>Tarifa del passatge</td>
+<td>Nombre</td>
+<td></td>
+</tr>
+<tr>
+<td>Embarked</td>
+<td>Port dÃ¢â‚¬â„¢Embarcament</td>
+<td>Factor</td>
+<td>C = Cherbourg 
+Q = Queenstown 
+S = Southampton</td>
+</tr>
+<tr>
+<td>TamanyFamilia   </td>
+<td>Nombre de familiars embarcats   </td>
+<td>Enter   </td>
+<td>
+</tr>
+</table>
+
+<h2>3.2. IdentificaciÃƒÂ³ i tractament de valors extrems.</h2>
+
+<p>Identifiquem els valors extrems de les variables <strong>Age</strong> i <strong>Fare</strong> a partir de la funciÃƒÂ³ boxplot:</p>
+
+<pre><code class="r">outliers_age &lt;- boxplot.stats(dades$Age)$out
+outliers_fare &lt;- boxplot.stats(dades$Fare)$out
+outliers_age
+</code></pre>
+
+<pre><code>##  [1] 66.0 65.0 65.0 71.0 70.5 70.0 65.0 64.0 65.0 71.0 64.0 80.0 70.0 70.0
+## [15] 74.0 67.0 76.0 64.0 64.0 80.0 64.0
+</code></pre>
+
+<pre><code class="r">outliers_fare
+</code></pre>
+
+<pre><code>##   [1]  71.2833 263.0000 146.5208  82.1708  76.7292  80.0000  83.4750
+##   [8]  73.5000 263.0000  77.2875 247.5208  73.5000  77.2875  79.2000
+##  [15]  66.6000  69.5500  69.5500 146.5208  69.5500 113.2750  76.2917
+##  [22]  90.0000  83.4750  90.0000  79.2000  86.5000 512.3292  79.6500
+##  [29] 153.4625 135.6333  77.9583  78.8500  91.0792 151.5500 247.5208
+##  [36] 151.5500 110.8833 108.9000  83.1583 262.3750 164.8667 134.5000
+##  [43]  69.5500 135.6333 153.4625 133.6500  66.6000 134.5000 263.0000
+##  [50]  75.2500  69.3000 135.6333  82.1708 211.5000 227.5250  73.5000
+##  [57] 120.0000 113.2750  90.0000 120.0000 263.0000  81.8583  89.1042
+##  [64]  91.0792  90.0000  78.2667 151.5500  86.5000 108.9000  93.5000
+##  [71] 221.7792 106.4250  71.0000 106.4250 110.8833 227.5250  79.6500
+##  [78] 110.8833  79.6500  79.2000  78.2667 153.4625  77.9583  69.3000
+##  [85]  76.7292  73.5000 113.2750 133.6500  73.5000 512.3292  76.7292
+##  [92] 211.3375 110.8833 227.5250 151.5500 227.5250 211.3375 512.3292
+##  [99]  78.8500 262.3750  71.0000  86.5000 120.0000  77.9583 211.3375
+## [106]  79.2000  69.5500 120.0000  93.5000  90.0000  80.0000  83.1583
+## [113]  69.5500  89.1042 164.8667  69.5500  83.1583  82.2667 262.3750
+## [120]  76.2917 263.0000 262.3750 262.3750 263.0000 211.5000 211.5000
+## [127] 221.7792  78.8500 221.7792  75.2417 151.5500 262.3750  83.1583
+## [134] 221.7792  83.1583  83.1583 247.5208  69.5500 134.5000 227.5250
+## [141]  73.5000 164.8667 211.5000  71.2833  75.2500 106.4250 134.5000
+## [148] 136.7792  75.2417 136.7792  82.2667  81.8583 151.5500  93.5000
+## [155] 135.6333 146.5208 211.3375  79.2000  69.5500 512.3292  73.5000
+## [162]  69.5500  69.5500 134.5000  81.8583 262.3750  93.5000  79.2000
+## [169] 164.8667 211.5000  90.0000 108.9000
+</code></pre>
+
+<p>Si observem els valors extrems identificats de les variables <strong>Age</strong> i <strong>Fare</strong>, sÃƒÂ³n valors coherents i que no tenen perquÃƒÂ© suposar un error en la mostra de dades. No obstant, si volguesim eliminar els valors ho fariem mitjanÃƒÂ§ant el codi segÃƒÂ¼ent:</p>
+
+<pre><code class="r">#dades&lt;-dades[-which(dades$Age %in% outliers_age),]
+#dades&lt;-dades[-which(dades$Fare %in% outliers_fare),]
+</code></pre>
+
+<p>#4. AnÃƒÂ lisi de les dades.</p>
+
+<p>##4.1. SelecciÃƒÂ³ dels grups de dades que es volen analitzar/comparar (planificaciÃƒÂ³ dels anÃƒÂ lisis a aplicar).</p>
+
+<p>##4.2. ComprovaciÃƒÂ³ de la normalitat i homogeneÃƒÂ¯tat de la variÃƒÂ ncia.</p>
+
+<p>##4.3. AplicaciÃƒÂ³ de proves estadÃƒÂ­stiques per comparar els grups de dades. En funciÃƒÂ³ de les dades i de lÃ¢â‚¬â„¢objectiu de lÃ¢â‚¬â„¢estudi, aplicar proves de contrast dÃ¢â‚¬â„¢hipÃƒÂ²tesis, correlacions, regressions, etc. Aplicar almenys tres mÃƒÂ¨todes dÃ¢â‚¬â„¢anÃƒÂ lisi diferents.</p>
+
+<p>En l&#39;apartat anterior, hem integrat els conjunts d&#39;entrenament i test, aquest fet ens ha estat ÃƒÂºtil per a obtenir una major mostra per omplir amb major confianÃƒÂ§a els buits o zeros del conjunt. No obstant aixÃƒÂ², en aquest apartat ens centrarem en la variable <strong>Survived</strong>. Aquesta variable ens indica si un individuo va sobreviure o no a l&#39;accident del titÃƒÂ nic, nomÃƒÂ©s la tenim informada per a les dades del conjunt d&#39;entrenament, per tant, nomÃƒÂ©s utilitzarem les dades d&#39;aquest.</p>
+
+<pre><code class="r">titanic_train &lt;- dades[!is.na(dades$Survived),]
+titanic_test &lt;- dades[is.na(dades$Survived),]
+
+write.csv(dades, file = &quot;dadesValidated.csv&quot;)
+write.csv(titanic_train, file = &quot;trainValidated.csv&quot;)
+write.csv(titanic_test, file = &quot;testValidated.csv&quot;)
+</code></pre>
+
+<h3>HipÃƒÂ²tesi nulÃ‚Â·la i alternativa</h3>
+
+<p>En aquest cas d&#39;estudi, prenem per a hipÃƒÂ²tesi nulÃ‚Â·la que la mitjana de les variables numÃƒÂ¨riques <strong>Age, TamanyFamilia, Fare, Pclass</strong> ÃƒÂ©s independent a la variable <strong>Survived</strong>. Ãƒâ€°s a dir, les mitjanes de les variables anteriors pels passatgers sobrevivents i les que no sÃƒÂ³n iguals.
+\(H_0: \mu_1 = \mu_0\)</p>
+
+<p>Com a hipÃƒÂ²tesi alternativa, es tÃƒÂ© que la mitjana de cadascuna de les variables dels passatgers sobrevivents i la dels no sobrevivents ÃƒÂ©s diferent.
+\(H_1: \mu_1 \not= \mu_0\)</p>
+
+<p>On \(\mu_1\) ÃƒÂ©s la mitjana de cadascuna de les variables numÃƒÂ¨riques pels passatgers supervivents i \(\mu_2\) ÃƒÂ©s la mitjana de la variable d&#39;estudi pels passatgers no supervivents.</p>
+
+<h3>AssumpciÃƒÂ³ de normalitat</h3>
+
+<p>Comprovar si es compleix l&#39;assumpciÃƒÂ³ de normalitat en les dades. Per a fer-ho, s&#39;aplica el test Shapiro-Wilk. Si el p-valor del test Shapiro Wilk ÃƒÂ©s superior a 0.05, implica que la distribuciÃƒÂ³ de les dades no ÃƒÂ©s significativament diferent de la distribuciÃƒÂ³ normal. Ãƒâ€°s a dir, podem assumir normalitat.</p>
+
+<pre><code class="r">shapiro.test(titanic_train$Age)
+</code></pre>
+
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  titanic_train$Age
+## W = 0.98099, p-value = 0.000000002263
+</code></pre>
+
+<pre><code class="r">shapiro.test(titanic_train$TamanyFamilia)
+</code></pre>
+
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  titanic_train$TamanyFamilia
+## W = 0.61508, p-value &lt; 2.2e-16
+</code></pre>
+
+<pre><code class="r">shapiro.test(titanic_train$Fare)
+</code></pre>
+
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  titanic_train$Fare
+## W = 0.51848, p-value &lt; 2.2e-16
+</code></pre>
+
+<pre><code class="r">shapiro.test(titanic_train$Pclass)
+</code></pre>
+
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  titanic_train$Pclass
+## W = 0.71833, p-value &lt; 2.2e-16
+</code></pre>
+
+<pre><code class="r">length(titanic_train$Pclass)
+</code></pre>
+
+<pre><code>## [1] 891
+</code></pre>
+
+<p>Com que el p-valor ÃƒÂ©s inferior a 0,05 en tots els casos, es rebutja la hipÃƒÂ²tesi nulÃ‚Â·la del test de Shapiro-Wilk que confirma l&#39;assumpciÃƒÂ³ de normalitat en les dades.</p>
+
+<p>No obstant aixÃƒÂ², com que es tÃƒÂ© que \(N=891\) com a conseqÃƒÂ¼ÃƒÂ¨ncia del teorema del lÃƒÂ­mit central, es pot considerar que les dades segueixen una distribuciÃƒÂ³ normal.</p>
+
+<h3>HomogeneÃƒÂ¯tat de la variÃƒÂ ncia</h3>
+
+<p>Les variÃƒÂ ncies sÃƒÂ³n desconegudes. A continuaciÃƒÂ³, per a decidir si apliquem variÃƒÂ ncies iguals o diferents, apliquem el test de Fligner-Killena.</p>
+
+<pre><code class="r">library(car)
+
+fligner.test(Age ~ Survived, data = titanic_train)
+</code></pre>
+
+<pre><code>## 
+##  Fligner-Killeen test of homogeneity of variances
+## 
+## data:  Age by Survived
+## Fligner-Killeen:med chi-squared = 1.7343, df = 1, p-value = 0.1879
+</code></pre>
+
+<pre><code class="r">fligner.test(TamanyFamilia ~ Survived, data = titanic_train)
+</code></pre>
+
+<pre><code>## 
+##  Fligner-Killeen test of homogeneity of variances
+## 
+## data:  TamanyFamilia by Survived
+## Fligner-Killeen:med chi-squared = 19.647, df = 1, p-value =
+## 0.000009317
+</code></pre>
+
+<pre><code class="r">fligner.test(Fare ~ Survived, data = titanic_train)
+</code></pre>
+
+<pre><code>## 
+##  Fligner-Killeen test of homogeneity of variances
+## 
+## data:  Fare by Survived
+## Fligner-Killeen:med chi-squared = 93.468, df = 1, p-value &lt;
+## 2.2e-16
+</code></pre>
+
+<pre><code class="r">fligner.test(Pclass ~ Survived, data = titanic_train)
+</code></pre>
+
+<pre><code>## 
+##  Fligner-Killeen test of homogeneity of variances
+## 
+## data:  Pclass by Survived
+## Fligner-Killeen:med chi-squared = 23.648, df = 1, p-value =
+## 0.000001157
+</code></pre>
+
+<p>El p-valor ÃƒÂ©s superior a 0,05 en la variable age i per tant en ella podem assumir la igualtat de variÃƒÂ ncies. No obstant aixÃƒÂ², per la resta de variables el p-valor ÃƒÂ©s inferior a 0,05 i per tant s&#39;assumeix la no igualtat de variÃƒÂ ncies.</p>
+
+<p>Per tant, apliquem test t de dues mostres independents per a la diferÃƒÂ¨ncia de mitjanes, variÃƒÂ ncies desconegudes i iguals en el cas de l&#39;edat i apliquem test de wilcox en el cas de la mida de la famÃƒÂ­lia, la tarifa i la classe.</p>
+
+<pre><code class="r">t.test(Age ~ Survived,data = titanic_train, var.equal=TRUE)
+</code></pre>
+
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  Age by Survived
+## t = 1.5319, df = 889, p-value = 0.1259
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.420076  3.408488
+## sample estimates:
+## mean in group 0 mean in group 1 
+##        30.38798        28.89377
+</code></pre>
+
+<pre><code class="r">wilcox.test(TamanyFamilia ~ Survived,data = titanic_train, var.equal=TRUE)
+</code></pre>
+
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  TamanyFamilia by Survived
+## W = 77659, p-value = 0.0000007971
+## alternative hypothesis: true location shift is not equal to 0
+</code></pre>
+
+<pre><code class="r">wilcox.test(Fare ~ Survived,data = titanic_train, var.equal=TRUE)
+</code></pre>
+
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  Fare by Survived
+## W = 59732, p-value &lt; 2.2e-16
+## alternative hypothesis: true location shift is not equal to 0
+</code></pre>
+
+<pre><code class="r">wilcox.test(Pclass ~ Survived,data = titanic_train, var.equal=TRUE)
+</code></pre>
+
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  Pclass by Survived
+## W = 127940, p-value &lt; 2.2e-16
+## alternative hypothesis: true location shift is not equal to 0
+</code></pre>
+
+<p>El valor-p ÃƒÂ©s superior a 0,05 en el cas de l&#39;edat i per tant s&#39;accepta la hipÃƒÂ²tesi \(H_0\) i s&#39;afirma que hi ha diferÃƒÂ¨ncia estadÃƒÂ­stica en la mitjana d&#39;edat en els dos grups. A continuaciÃƒÂ³ es mostren dos histogrames, un amb l&#39;edat dels supervivents i l&#39;altre amb els no supervivents.</p>
+
+<pre><code class="r">hist(dades$Age[dades$Survived == 0], main = &quot;Histograma edat passatgers no supervivents&quot;, col = &quot;red&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-27"/></p>
+
+<pre><code class="r">hist(dades$Age[dades$Survived == 1], main = &quot;Histograma edat passatgers supervivents&quot;, col = &quot;blue&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-27"/></p>
+
+<p>En els dos histogrames anteriors, es veu com la majoria de passatgers amb edat inferior a 20 anys van sobreviure al titÃƒÂ nic. Pel que fa a les altres franges d&#39;edat, no s&#39;aprecien diferencies.</p>
+
+<p>En canvi, el valor-p ÃƒÂ©s inferior a 0,05 en el cas del dimensiÃƒÂ³ de la famÃƒÂ­lia, la tarifa i la classe, per tant es rebutja la hipÃƒÂ²tesi \(H_0\) i s&#39;accepta la hipÃƒÂ²tesi alternativa \(H_1\) que afirmar que no hi ha diferÃƒÂ¨ncia estadÃƒÂ­stica de la mitjana de les dues variables en els dos grups.</p>
+
+<h3>CorrelaciÃƒÂ³</h3>
+
+<p>Per a comprovar la correlaciÃƒÂ³ entre variables, tan sols comparem les variables numÃƒÂ¨riques. Per tant, per a aquesta prova seleccionem tan sols les variables <strong>Age</strong>, <strong>TamanyFamilia</strong>, <strong>Fare</strong> i <strong>Pclass</strong>. En primer lloc calculem la matriu de correlaciÃƒÂ³ entre les variables.</p>
+
+<pre><code class="r">titanic_cor &lt;- data.frame(titanic_train$Age, titanic_train$TamanyFamilia, titanic_train$Fare, titanic_train$Pclass)
+cor(titanic_cor)
+</code></pre>
+
+<pre><code>##                             titanic_train.Age titanic_train.TamanyFamilia
+## titanic_train.Age                   1.0000000                 -0.31425111
+## titanic_train.TamanyFamilia        -0.3142511                  1.00000000
+## titanic_train.Fare                  0.0875904                  0.21254320
+## titanic_train.Pclass               -0.3543361                  0.06599691
+##                             titanic_train.Fare titanic_train.Pclass
+## titanic_train.Age                    0.0875904          -0.35433611
+## titanic_train.TamanyFamilia          0.2125432           0.06599691
+## titanic_train.Fare                   1.0000000          -0.55989875
+## titanic_train.Pclass                -0.5598987           1.00000000
+</code></pre>
+
+<p>Estudiem doncs els casos amb major correlaciÃƒÂ³:</p>
+
+<p>-Variables <strong>Pclass</strong> i <strong>Fare</strong>: correlaciÃƒÂ³ de -0.5598987.
+-Variables <strong>Pclass</strong> i <strong>Age</strong>: correlaciÃƒÂ³ de -0.3543361.
+-Variables <strong>Age</strong> i <strong>TamanyFamilia</strong>: correlaciÃƒÂ³ de -0.3142511.</p>
+
+<p>Abans de comprovar la correlaciÃƒÂ³ entre els parells de variables anteriors, per a decidir quin ÃƒÂ©s el mÃƒÂ¨tode mÃƒÂ©s adequat a aplicar, cal comprovar si es compleix l&#39;assumpciÃƒÂ³ de normalitat en les dades. Per a fer-ho, tal com hem fet anteriorment, s&#39;aplica el test Shapiro-Wilk.</p>
+
+<pre><code class="r">shapiro.test(titanic_train$Pclass)
+</code></pre>
+
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  titanic_train$Pclass
+## W = 0.71833, p-value &lt; 2.2e-16
+</code></pre>
+
+<pre><code class="r">shapiro.test(titanic_train$Age)
+</code></pre>
+
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  titanic_train$Age
+## W = 0.98099, p-value = 0.000000002263
+</code></pre>
+
+<pre><code class="r">shapiro.test(titanic_train$Fare)
+</code></pre>
+
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  titanic_train$Fare
+## W = 0.51848, p-value &lt; 2.2e-16
+</code></pre>
+
+<pre><code class="r">shapiro.test(titanic_train$TamanyFamilia)
+</code></pre>
+
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  titanic_train$TamanyFamilia
+## W = 0.61508, p-value &lt; 2.2e-16
+</code></pre>
+
+<p>Com que en tots els casos, el p-valor ÃƒÂ©s inferior a 0,05 es rebutja la hipÃƒÂ²tesi nulÃ‚Â·la del test de Shapiro-Wilk  que confirma l&#39;assumpciÃƒÂ³ de normalitat en les dades. Per tant, per a estudiar la correlaciÃƒÂ³ entre els parells de variables estudiats aplicarem el test de Spearman.</p>
+
+<pre><code class="r">cor.test(titanic_train$Pclass,titanic_train$Fare, method=&quot;spearman&quot;)
+</code></pre>
+
+<pre><code>## Warning in cor.test.default(titanic_train$Pclass, titanic_train$Fare,
+## method = &quot;spearman&quot;): Cannot compute exact p-value with ties
+</code></pre>
+
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  titanic_train$Pclass and titanic_train$Fare
+## S = 203770000, p-value &lt; 2.2e-16
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##        rho 
+## -0.7284641
+</code></pre>
+
+<pre><code class="r">cor.test(titanic_train$Pclass,titanic_train$Age, method=&quot;spearman&quot;)
+</code></pre>
+
+<pre><code>## Warning in cor.test.default(titanic_train$Pclass, titanic_train$Age, method
+## = &quot;spearman&quot;): Cannot compute exact p-value with ties
+</code></pre>
+
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  titanic_train$Pclass and titanic_train$Age
+## S = 158370000, p-value &lt; 2.2e-16
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##        rho 
+## -0.3433576
+</code></pre>
+
+<pre><code class="r">cor.test(titanic_train$TamanyFamilia,titanic_train$Age, method=&quot;spearman&quot;)
+</code></pre>
+
+<pre><code>## Warning in cor.test.default(titanic_train$TamanyFamilia,
+## titanic_train$Age, : Cannot compute exact p-value with ties
+</code></pre>
+
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  titanic_train$TamanyFamilia and titanic_train$Age
+## S = 145000000, p-value = 3.684e-12
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##        rho 
+## -0.2299892
+</code></pre>
+
+<p>En els tres casos, el p-valor ÃƒÂ©s significatiu. Per tant, podem observar doncs una correlaciÃƒÂ³ prou significativa entre les parelles de variables estudiades, mÃƒÂ©s concretament:</p>
+
+<p>-Variables <strong>Pclass</strong> i <strong>Fare</strong>: correlaciÃƒÂ³ de -0.7284641
+-Variables <strong>Pclass</strong> i <strong>Age</strong>: correlaciÃƒÂ³ de -0.3433576
+-Variables <strong>Age</strong> i <strong>TamanyFamilia</strong>: correlaciÃƒÂ³ de -0.2299892</p>
+
+<p>La primera resulta totalment comprensible ja que la tarifa sol anar marcada principalment per a la classe, on la primera ÃƒÂ©s la que tÃƒÂ© tarifa mÃƒÂ©s alta i la tercera la mÃƒÂ©s baixa, ÃƒÂ©s a dir correlaciÃƒÂ³ negativa.</p>
+
+<p>El segon resultat tambÃƒÂ© sembla coherent, ja que com mÃƒÂ©s edat tÃƒÂ© una persona, normalment acostuma a tenir major poder adquisitiu i mÃƒÂ©s comoditat busca, per tant, selecciona classes superiors.</p>
+
+<p>Les variables <strong>Age</strong> i <strong>TamanyFamilia</strong> tenen una petita correlaciÃƒÂ³ negativa que tambÃƒÂ© tÃƒÂ© una possible explicaciÃƒÂ³, ja que per exemple els nens, no viatjaran sols. En canvi, els adults sÃƒÂ­ que podrien viatjar sols. Finalment, observem els diagrames de dispersiÃƒÂ³ de les 3 parelles anteriors.</p>
+
+<pre><code class="r">plot(titanic_train$Fare, titanic_train$Pclass, main=&quot;Diagrama dispersiÃƒÂ³ Pclass i Fare&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-31"/></p>
+
+<pre><code class="r">plot(titanic_train$Age, titanic_train$Pclass, main=&quot;Diagrama dispersiÃƒÂ³ Pclass i Age&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAzFBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZpAAZrY6AAA6ADo6AGY6OgA6OmY6OpA6ZpA6ZrY6kLY6kNtmAABmADpmAGZmOgBmOjpmOpBmZmZmkJBmkLZmkNtmtpBmtttmtv+QOgCQOjqQOmaQZgCQZjqQZmaQZpCQtmaQ27aQ29uQ2/+2ZgC2Zjq2kDq2kGa2ttu225C227a22/+2/7a2/9u2///bkDrbkGbbtmbbtpDb2//b/7bb/9vb////tmb/tpD/25D/27b//7b//9v///+CKkYvAAAACXBIWXMAAAsSAAALEgHS3X78AAAPsElEQVR4nO2dDYOayB2H2U321uRum2qS3vUlurlr2ui1vea69q6p1gjf/zt1hjdBYHcQEPD3PMkqMsx/gMd5AQW9ACTx+l4B6AfEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiC/nx+efVvO+V6JLEF+Kf//xx+uHvteiSxAvylDF72ee4dk7O9Ws6u1nN5s6MaJl/YV3a199ees9fzis0NX8aLmn4liSWINi2OI9b9pCpJtN/Vy7iRd6W998fjvNrNDV8hDX9c2UxBoUwxVv99UvZo+FU7u3nvfc7HP/B+/5P41Jf3H13eT6Uzx7631l5j/8e2IrZLKoxSx+9aekxv/va5PwydS/679Mwmrs/33iXb2zNTIMFqdHJa+977x5tCKR6/D946/MO9EETZdLCovzps9B9o2RxEpWPi24T4YtPlh5czsVVTfr27b/k3ji5nM8extWxmfm77CoDRIuZV8UYoRLrOI2JR8sLNm8O36a2PZ5fbNZ3UYrFIuP8kdvyH2aJ/+c2YIgjZWufFpwnwxc/DoSb+fszPNucr0080J7cbdpZ289U/kn3rukdu6SLMni+zBv+m6YBl9m3tzM+GQmrh+iYEl6VJMnt8aXCbJ/GzcfaVNvgn7yV8frFeVNnjNbEKSx0rVJCz7HjqxiJOL9X//8tWcN30Z1z7TOVkdm9j40aObG82yQdPEo0dS3P/wniISuvWnUThiVUbAkPSzPlBv+ZVfILhz2K9PDGsaFHWJHz5ktCNJY6dqkBZ9zhx4zcPFxzfoye/6Pz7OC+OzsZG4yzwbJiQ+CX3+IJJWLT9KTN4nhNrdCcWXexrOz65XkPTwfxKexEO9CfnC39l4Fv0xyTb3dbcnsrPhkng2Sa+rtDP97b25E/HaTNvXh3EXiwKZH3YIXdeTZFYrF26Y++Js3za5Xkjf7nHYFSax8U983wxWfHM7twyod7bvM4M66SmZnxW8zynKDu1yMzODuOFgk1Dbnq2xbn4rPDu4OK5B/jjJEz2ms48HdKUeZ7TFs8ckJHP9H7+qPtp+0Y62f06Y+mZ0Vny5qsYdzv0+a+l+/Dvvo6HDuNxub3VRGMxHX+DjdLPuvRZh/nW3rD6cDTAnxcof1ivOmz0Eq3j/ESlY+LbhPhiq+nJ09Uv+lWV2J+vgeaGPl22Nc4uNmutERcG/i21j59hiX+ODLvRkNv2pUZ3oT38bKt8fIxENbIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFGaiPdgyHQovkFe6BrEi4J4URAvCuJFaSy+5Fpx57zQH03F+4voiuNt8SpPxA+ZpuL3bx5yz3XyQo9Q40Vp3MfHNyWhjx8ZZxvVJ+cJ7UM6cfRQNT9JzIR4LPH43GQxMZ06ilOSWDZ1nCnZwNJ1z+6B7PMhMZ0qy1l1crXktOuT52Gr7dRNds8b75Vw1bzodfGhan6cGAZ4MjESnT6UJAbx1HGwssSSnPkVjf4FQdUG5HZH5u+QmE6V5czHyO7cpOBCASfYqZ18IDO4O1S1bCDE5/8uRfxTeREvKj6o7CIzD1Xzk8Sybrkk8YiSxHTqKE5JYtnUcaZkA0vXPbsHss+HxHSqLGc+xtH+LMw61U7d5CA8czddMaofHU3F2+P4lb338h3H8aOiqXg7qNtOOXM3Otqo8RZq/Mho3MfvZ+G9WOnjR8bZRvUwLBAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXpSm4vdvHoL9zPNuNvXzQo+0IN66D3av6ueFHmlB/O5uE9X8unmhRxqLn119fG9r/F2hrUf8kGk+uPMX3m2wvS5UeMQPGkb1oiBelLbEZwZ3XsLpawWdQ40XBfGiNBa/m3hXS47jR0dT8f5ibv6miB8bbZyrD4LVLeJHRhs13rB+9hLxo6JxH7+fTe3TunjqDvFDhlG9KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXxU38+maz9rx5q6GhV5zE718vzf9d8brIJqGhV9zEv3kwdR7xl4RjU+9dLbc09ZcEgztREC8Ko3pRGNWLwqheFEb1ojC4EwXxorg29ZaSHyNoEBp6xXVUv70N1rethoZecR3VJ7821V5o6BUn8f790vzncO6ScOvjjfOt501bDQ29wqheFMSL4iDe/nQsh3OXBjVeFMSL4ibefkCztr851GJo6BXXM3dBeEzXZmjoFbcTOOEPz2xvCj8Y3SQ09IpbUx8O7GsO6hE/aBjciYJ4UVzE7ya1v2HrEBp6xUG8HdrVHdE7hIZecTll++bBfjDbdmjoFVfxi/ptPeKHDOJF4dM5UTicEwXxojgdx79YBlvP49O5S8LxON5+PseHNJeEg/i15500ukP8kHGp8ffLYD3lY9nLwvFcvXG+oo+/JBjVi4J4UVy/bMmZuwvD7cuWsxM+jkf8oHG9TLpyCfstjfLWAPFDxq2pX1VeKJt8bFdyrIf4IePY1Ff28UljUNIoIH7INB3VU+NHSuPDuerWAPFDxukbOD9XN/XuocMQ4VOQThw9hBOloXKJVTkfCZspvJipLNF7LNFhA44S87MOL6u2rrj5LvPqcLYTOImBOMEre6gqMJ9YlfORsGHhVZlKEuN/T+Ws3oDi/CD/6njZkvmFzX9qXi3aEp8Z3KUf5uUjIX6E4lu4wSHic6/GIb6VGxzSx+deHU0Ns49/7AaHu0n4nSyO40eGk/hHbnBoj+P9xRTxY8Otj6++wWEkfHWL+JHhJr6a+Mzd+lmxOUD8kHHt4yuX2M/ChmBdHPIjfsi49vHth4ZecavxbZyyhUHRtI/vKC90TY0+nh8quCQcxKeXSXNBxQXReFR/cmjolXp9/LbOt20RP2QQLwriRUG8KIgXBfGiIF4UTtmK4iae36S5OFy/bBnwmzSXhdvn8fwmzcXh1tTzmzQXB4M7URAvisvn8e1cLQuDghovCuJFcT2BQ1N/YTh+vZr73F0afOdOFLemvvo+d6eHhl7hShpRGNWLgnhR3MS3cPMjGBaun8c3v/kRDIrGNz86OTT0StObH50eGnql6c2PTg8NvcKoXhRujCAKN0YQhQ9pRKGPF4Xv3IlCjReFUb0ojOpFYVQvCn28KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXpal4e3WVvbiu5Lo6xA+ZFsSHV9btXtXPCz3Sgvjd3ab0ukrED5nG4mdXH9/bGn9XaOsRP2SaD+78hXcbbEtuk4L4IcOoXhTEi9KW+Mzgzks4fa2gc6jxoiBeFMSLgnhRmp/AiUdyxQN5xA+ZxjXeX1T9cAXih0zzpn7/enlyXugN+nhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBelMbidxPPcv1wQl7oj6bi/cU8fN7ebGrnhR5pKn7/5iH3XCcv9Ag1XpTGffx+Rh8/Rs44qjdvj/QxO1EdILdE+KryIbtESCaxKtOjEd0TM8XViZjfxKe3rmTnPL0Lq3bmOcWH1uPH9OVT+b38q8qHzBLpHs4mVmV6NKJTYq64GhHzm/j01lXsHFdBhWXbEp8Z3HmHWlAsGvEXJv7pvIgXFR/QxxfWuLju1VtXsnPG0cfDoEC8KE3Fx4fxZQfyiB8yjWu8v5ienBf6o3lTv3+9PDkv9AZ9vCiIFwXxoiBeFMSLgnhRuhQPQ6Y78d0E6im+2gYg/lwFDGwDEH+uAga2AYg/VwED2wDEn6uAgW0A4s9VwMA2APHnKmBgG8BJGFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQL0o74vczr3iLnLaw91ubd1tGeKOfzgrwF97VsssNMHvIXuBWq4BWxNv9tr5tI1IJ9kKe3Ytlp2WszTuruwJWc3vrqO7i2z20rltAK+Lt3TJ2L4t3R2qFrd2W1bzLMnbfvJ13txHxvUS624Dd3cZGr1dAK+LDkquusGsDE7zDMvz7j6aydFbA7u5729R3twFxja9XQCvi7T3wuhRvL9jtsIz11LaSnRWwm4Tvqg43IOrc6xUwhhq/n027LMNE9rut8ZtumywzAgq21w891PhO+/iwxnRZxjr8Fvq0uz7+21BIdxsQV/Ue+njbFHc24o68d1uGrfHdFbCaR61KV/HjGl+vgOEfx0cVcj7i43gTuPZhdi22Xv0TBZy5EwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLctHidy8fov+F2Y+8zrzaht/yfOR3uEbMpYsPip4rFiuZ/+Ljh8/2wrftd1U/vTdeLlm8/VrzTy9/tl9uji61tlex2Scj2qRdLTOLffM2Xci0EfFyd//9YL+u7N//9dtNuNzz3y2TL0uPnUsWf2jqw0utzdQkvAbPTCUXy6WLTeZBslC63H72LhS/u9usTIu/MjPNm2XV4YUdZ0RDvH2xfxNOlfT7mdfRQvFyxrXnTe1FlfZabXuFkn+/tG+P+MLnUaMifmV/FTkj/m5zvFhwWCgV73/4PJv7Cy+cb7JY8fZHlq/GP9jTEL+fzYOD0Ioaf1goXm5763/YrKbhmyS6M4MVfwG13aIhPjT5YnkQH14XncjP1PFoofjV/rUZ1b9eru0RnWnrD338trsb/pyNixbvL8yo3ki+flh73vO384P47Kg+Xiy8PDNaKH0b2GG+/96+P+xlyDPvq/tlLueIuWjxjfE/5Kt2dzcBODvK4m2Fdh+p2THeJVT1GGXx0iBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIF+X/FUHuZrMN9s4AAAAASUVORK5CYII=" alt="plot of chunk unnamed-chunk-31"/></p>
+
+<pre><code class="r">plot(titanic_train$Age, titanic_train$TamanyFamilia, main=&quot;Diagrama dispersiÃƒÂ³ Age i TamanyFamilia&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAz1BMVEUAAAAAADoAAGYAOjoAOmYAOpAAZpAAZrY6AAA6ADo6AGY6OgA6OmY6OpA6ZpA6ZrY6kLY6kNtmAABmADpmAGZmOgBmOjpmOpBmZmZmkJBmkLZmkNtmtpBmtttmtv+QOgCQOjqQOmaQZgCQZjqQZmaQZpCQkJCQtmaQ27aQ29uQ2/+2ZgC2Zjq2kGa2ttu225C227a22/+2/7a2/9u2///bkDrbkGbbtmbbtpDb25Db2//b/7bb/9vb////tmb/tpD/25D/27b//7b//9v///+xairOAAAACXBIWXMAAAsSAAALEgHS3X78AAAQnklEQVR4nO2di2PaxgGHz25ck7RpB4nX7hHw2mVbIVuXzCzdMlMC/P9/0+70QgJJnJCEZP2+L7GNT/eSPu4hoZPNDiQxXVcAugHxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC+Ksvh3z94vpl1XoiuExW/vf3p3/dB1LbpCWLw2XYrfTIzlizfuVb2mt5ncPFbJI4y7nZlb99vnO/MsShoHlaQKIgUUxzwmTpM7tLiM468Kedaie/HGjBvI6eaxeqr1yAQHennz6W6cDSqlcfGOS0p3dCve7etHE73V13fGPJvbY/SjefZPa3I7u/p+dP0+Cl6ZL234w79HV/bYxVEdNvrVH+MW/+tXdsN7e5iv/zoKmvH27yNz9cYd+CCzaHtY8tJ8H4rYTK6izOKguA5J+n19A9Yj904rqVpUg/f254ONMA5+hkmPE2VafHrfWqR78buFmYZ77VqE8+36/1H04uZTFLwKGswX9msf1WUSNaVQfCaPIMYi6lOymQUlWxc/j1yrXd48LsLWGwcldUjSp+rrCMRvSqoW1eDWvpWmu8XVPBGfnyj9td+3NumB+GUo3oWs7c/16Hpuw4JjF3WmLnhlbOMfmTdx61zHSeLomyBt8m4Y7z5PzNQGvLcvrh/CzOLtYdMa3YY6NndxE4uDkkyT9Kn6hhEjNUVVC2rwMcghyDJ5I+QlOhzj15P2u/0eid/+8uevjDsit+GgbXtndxxTwZvgiNrQKMxlkkQPN9pG9Pv/7kKhSzMO25VxLc5lFm8PynNtcZkddOOgJNMkfaq+jlB8SdWC1+Fe2H7mdrcXn5MoIz61b23SA/FRV/958uwfnyZH4tPBcWgc5jLJiN/tfvkxPOz54uPt8ZvkYIaWBPmJL6taUINgzrm8+stovEu6+rxEafHpfWuT7sXHk7ul+Xb3cZTp6t3xjoPTByoOc5lkunoXsP3BTK3B3zwmXX0QOovnb257OCwETtOHOAnKdvXZ+kYxndKSqu3F20yv5nvxeYnS4tP71ib9OJ3bBE0gPOipyZ1zFQenD9QqpSwzucvkkZrcHWYWHmE3ZVuk+/ok6HByl5oZhATiy6q2F2/zCr5HafMSpcWn961NuhcfX8DZvjNXf3ADrJtrfUi6+jg4faCSqA53Ove7uKv/5avUydQ3bhh+Z1vxN49xi4+227j/mgXpl6m+frsPiuuQpA/rmxVfVrW9ePveCc4TorR5idLiM/vWIv27ZLt2Z7Yf653Q7M+au6tDwgUsnkH/xEfddK3LeXXFN1GHpurSEv0Tv/t8b6fR39ZqbLUPdgN1iFiaqz42+D6Kh0uAeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQLwriRakj3kCfaVF8jbTQNogXBfGiIF4UxIuCeFEQLwriRUG8KIgX5eLiT18sdBH230oTncwMiri0eHMq0yDC/ltpopOZQSGIFwXxojDGi8KsXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi1Jb/HoUPCcx5+9yI77P1BW/nYV//nx1c/TX1BHfZ+qK37x+yPyskhY6hBYvSu0xfjNhjH+KMKsXpQXxnk9Eh06hxYuCeFFqn85Non79eHaH+D5Tu8VvZ+Oz00J31O/qN6/mZ6eFzmCMFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kXxE78s+lPhNbKGTvESv3k1X93ulreNZg2d4if+9UP4v8msoVO8xG/v5/b/+gXih4PfGG+dr4wp+uvB52UNnVJ7Vr8emdtl7sTvKK2dH/rUKImVjV8U3gXd16A2dcXbISCY9a1fPp5Ka3zyS8XKxi8K74Lua1AfD/Gb1x8mhadzbsa3HIc/4zQxOXkhvi/Q4s+g+xrUp4kxfswY//Tw6eonUdfNlbsBwbV6URAvSt1Z/flZQ6fQ4kXxE7+ixQ8N349lm88aOsX3Y9nms4ZO8bwDp+IHcz5ZQ6dw65UojPGiMMaLwhgvil+L58rd4ODKnSiIF4XTOVFYSSMKK2lEYSWNKKykEYVZvSiIF8XrnrtzrtQjvt94is9ZKFM3a+gUxIuCeFFYQiUKs3pREC+K540YFT+fKcnarTAOVhkffMtEOHxVkE/r5FRvKHi2+JUxV1VvuMzNOn6mgDn4dhThxOMHLvJsgpzqDQb/rn47M2ZaO2vE9wRP8euRa/HVruEhvs94jvE31U/jGeN7DbN6UfzEs0x6cHh29ZVmdX5ZQ6f43nPXfNbQKX5d/YIlVEPDs6tnjB8azOpFQbwofuJZQjU4/MZ4llANDt/TOZZQDQwv8SyhGh5+YzxLqAYHs3pR+JBGFN9ZffNZQ6fwIY0onhdw+JBmaHDlThTGeFEY40VhjBeFGzFE4cqdKIgXhdM5UbgRQxRuxBCFGzFEqX0jxno0dSvnc5bTHmWdXXt6sAg1ZxVtTuqilKUl1cSzVs3T6jLdurP67Wy6W0x3ec9DO0ybXW1+sOzcZCKY4+T7oIKUhSXVxLNWzdNm3l7iS8d2u9GOAplIJiYnL8RXLLilvOuLd819ZceA1fGUH/ENFNxS3g2I3y2C1p1zqscY30TBrWV+ejNPthwi9Vv8uVlDpyBeFMSLUvc8vqW00DY+4tfP5+c80xTxfcZDvLs45263XFV8yiHi+4yH+GVyKa7a+Rzi+4xPi7+fB3db0uKHhNcYP3Ifvi0Y44cEs3pREC+Kn3jWxw8OL/E8xHh4+Iln7dzg8OvqeYjx4PDs6hnjhwazelEQL4rX5/Ef6OoHBy1eFMSL4ieeZdKDw+90jmXSg8P3yh3LpAeGl3iWSQ8PvzGe59UPDmb1ovDpnCi+Y3zzWUOnXPzTuWQ5dME2j8XBRQumTy+fLg1vgNKsW131XJlLj/Em9ZW7rWjjcRaHGR2kLC2ltICzKc26xXLPocIY38h5POJ7gs+nc/GDEZpYUIH4nnDxWT1jfD+oNsavqtxt26fdhEMQLwriRUG8KIgXBfGiIF4UPpYVxU/8ykx3S56IMST8rtwFf2KUW6+GhN/n8TM3tvPwoyHh19UHn9NU/Dge8b2GyZ0oiBfF5/N4VssOEFq8KIgXxfcCDl39wPC7gMNz7gbHxe+5g37g19XznLvB4dnVM8YPDWb1oiBeFD/xPPxocPh+Hs/DjwaG7+kcDz8aGH43YvDwo8HhN8bz8KPB0cysPrczOEgbzA9Tq2VPL40tXQtbmij7LS9lUd6eC3a9atxrKlyyzR3jk8Xzx1P+bNaRgXiVuNl/KyvbFPxWWmFzXMBhyqK8T9fqZOHnJOwAnxsxSh+MsJlY5ZkWn/xF0mxOiO8VDXxIs5nc/Od0V4/4ftHIGL8e5V3bYYzvMz5dPffcDZBmZvWNp4W2qTurPz9r6JTas/qzs4ZOaWBWf2bW0CmM8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBflcuJzV8tmNnusos1ZC3ucMkpbtDj3ZHi8wv+gzFRYXkWLduD0/mRe+FJ3Ye7FxOeuj89G3oebo+SpWHnfUr+F/w5KOZXo4Ns+lyRabDWnGqU7cHp/Mi98qZwgL4PzN1dIi/ii/cm88AXxiD+Pi4lnjC/cn8wLX57MGA/9AvGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQL0pt8euRuZrn/vnZbNrM4uXMi/IVv+lFzamV1hVWPBemPFj/nLNMumpxhYmKdrhombTnwalBXfHb2dR+jU+KNwdfqZX95jDuUboohomeT5AEpTcWPeOgJGX0Imdj9K8kx8rhuTucs7EoRtPUFR8KX9ymxMdtCPHp8KGJdy3esvziBS1eSvxuMxm7H8trxnipMb6ltNA2iBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi9Kx+Ox60ryNySv/BbEH5GzMLojNe5WzlDZnY2l47mrZgsW5J/cu7+CYwiW2pQfTy07L4l2U/QryvI2ZV15L4EPRybecjbvsEvicjfviSjeWhR9ULyfHwxhle3d0gJIdyDtepQczFVAC4hFfGcRn9g7xmTjxoSjcmLw6NQoeDMZ7cjYmr3KCTLa40o2l4Yd7lxN/dzplsvH44JiD8KLjmLuxY/HQFYgXBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGitCke+kx74tvJqKP81XYA8ZcqoGc7gPhLFdCzHUD8pQro2Q4g/lIF9GwHEH+pAnq2A4i/VAE92wEuwoiCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFGaEb+ZmJvHRnLKYT0yZtpuGdtZmwVsZ+Zq3uYO2CN0/VCxgEbEu+O2vG0ipxw2r+a79fN5q2Us7TurvQIW093q5rG9/N0RWlYtoBHxm9cPu/WLhyayOmbl9mUxbbOM9dd30/Z2wmW8a/MgrV8+utyrFdCI+KBk+7ZrDZt5i2Vs73+yjaW1AtYvf3BdfXs7ELX4agU0It52ZK2K387GbZaxHLtesrUC1qPgXdXiDoSDe7UCnkKL30zGbZZhc9622+If2+2y7Axot7p+6KDFtzrGBy2mzTKWwV3o4/bG+O8CIe3tQNTUOxjjXVfc2ow79N5uGa7Ft1fAYhr2Km3lH7X4agX0/zw+bJDTJ3webzOufJpdiZWpfqGAK3eiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEGLX794iH8fxRc8nvqt1Vwl+eu3VVCHTF08btjzwXRcsKf//T2k1v4tvp+3HzlOmbI4t1tzT+/+OBubg6XWrtVbO6HFW23Xc1T0b6+SyLZPiKK9/J/b93tytv7v333GMR79tt5fLP0U2fI4vddfbDU2r4aBWvw7Kt4sVwSbTTdxZGSeJvJm0D8+uXjwvb4Cxto3yyLFhd2XBAN8e6XzevgVc64n/o9jBTFs66NGbtFlW6ttluhtL2fu7dHtPD5SaMi3iq8Tot/+XgYbbePlIjfvv00mW5nJgi3SZz4iTHJKPGE0RC/mUx3e6EFLX4fKYq3ut2+fVyMgzdJ+GQGJ34Ard2hIT4w+Xy+Fx+si47lp9p4GCn6bfPKzupfzZfujM729fsxftXeA38uxqDFb2d2Vm8lXz8sjXl2N92LT8/qo2jB8swwUvI2cNP87Z/c+8MtQ56YL+/nmZRPmEGLr832bbZpt/cQgIujLN41aP+ZmpvjDaGpRyiLlwbxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCj/B4XKvxbvPq1yAAAAAElFTkSuQmCC" alt="plot of chunk unnamed-chunk-31"/></p>
+
+<h3>RegressiÃƒÂ³ logÃƒÂ­stica</h3>
+
+<p>En el nostre cas, el conjunt d&#39;entrenament i de test ja venen definits per necesitat, ja que en aquest segon no hi ha la categoritzaciÃƒÂ³ de si un passatger a sobreviscut o no. En cas que no hi haguÃƒÂ©s un conjunt d&#39;entrenament definit i per a guanyar una major eficiencia en l&#39;algoritme predictiu, una bona estrategia seria dividir de diferents maneres els conjunts d&#39;entrenament i test, comparant mitjanes o desviacions tipiques per tal d&#39;aconseguir un model mes robust. Una tecnica molt comuna que permet crear diferents conjunts d&#39;entrenaments i tests per tal d&#39;optimitzar el model ÃƒÂ©s el K-Fold.</p>
+
+<p>En primer lloc cal tractar les variables categÃƒÂ²riques. Usant el que sÃ¢â‚¬â„¢anomena variables dummy podrem calcular el model lineal. Per a fer-ho, especificarem quina ÃƒÂ©s la categoria de referÃƒÂ¨ncia amb la funciÃƒÂ³ relevel(). En la variable <strong>Sex</strong>, la categoria de referÃƒÂ¨ncia ÃƒÂ©s Ã¢â‚¬Å“femaleÃ¢â‚¬Â i per a la variable <strong>Embarked</strong> la categoria de referÃƒÂ¨ncia ÃƒÂ©s &ldquo;S&rdquo;</p>
+
+<pre><code class="r">titanic_train$sexR &lt;- relevel(titanic_train$Sex, ref = &quot;female&quot;)
+titanic_train$EmbarkedR &lt;- relevel(titanic_train$Embarked, ref = &quot;S&quot;)
+</code></pre>
+
+<p>Apliquem diversos models de regressiÃƒÂ³ logÃƒÂ­stica combinant diferents variables del conjunt de dades per a buscar el millor model de regressiÃƒÂ³.</p>
+
+<pre><code class="r">model1&lt;- glm(Survived ~ sexR+TamanyFamilia+Age+EmbarkedR+Pclass,data=titanic_train)
+summary(model1)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = Survived ~ sexR + TamanyFamilia + Age + EmbarkedR + 
+##     Pclass, data = titanic_train)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -1.00624  -0.21724  -0.07228   0.22000   0.98801  
+## 
+## Coefficients:
+##                 Estimate Std. Error t value   Pr(&gt;|t|)    
+## (Intercept)     1.323701   0.066827  19.808    &lt; 2e-16 ***
+## sexR[T.male]   -0.509715   0.027997 -18.206    &lt; 2e-16 ***
+## TamanyFamilia  -0.031486   0.008508  -3.701   0.000228 ***
+## Age            -0.005025   0.001023  -4.910 0.00000109 ***
+## EmbarkedR[T.C]  0.069263   0.033884   2.044   0.041235 *  
+## EmbarkedR[T.Q]  0.066257   0.047435   1.397   0.162831    
+## Pclass         -0.181467   0.017563 -10.332    &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for gaussian family taken to be 0.1446284)
+## 
+##     Null deviance: 210.73  on 890  degrees of freedom
+## Residual deviance: 127.85  on 884  degrees of freedom
+## AIC: 814.69
+## 
+## Number of Fisher Scoring iterations: 2
+</code></pre>
+
+<pre><code class="r">model2&lt;- glm(Survived ~ sexR+Age+Pclass,data=titanic_train)
+summary(model2)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = Survived ~ sexR + Age + Pclass, data = titanic_train)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -1.05489  -0.23720  -0.07882   0.21561   0.97773  
+## 
+## Coefficients:
+##                Estimate Std. Error t value  Pr(&gt;|t|)    
+## (Intercept)   1.2454421  0.0571957  21.775   &lt; 2e-16 ***
+## sexR[T.male] -0.4994160  0.0275270 -18.143   &lt; 2e-16 ***
+## Age          -0.0038999  0.0009843  -3.962 0.0000803 ***
+## Pclass       -0.1827548  0.0167452 -10.914   &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for gaussian family taken to be 0.1476099)
+## 
+##     Null deviance: 210.73  on 890  degrees of freedom
+## Residual deviance: 130.93  on 887  degrees of freedom
+## AIC: 829.89
+## 
+## Number of Fisher Scoring iterations: 2
+</code></pre>
+
+<pre><code class="r">model3&lt;- glm(Survived ~ sexR+EmbarkedR+Pclass,data=titanic_train)
+summary(model3)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = Survived ~ sexR + EmbarkedR + Pclass, data = titanic_train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.9774  -0.2303  -0.0772   0.2609   0.9228  
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     1.04527    0.04345  24.056   &lt;2e-16 ***
+## sexR[T.male]   -0.50886    0.02755 -18.469   &lt;2e-16 ***
+## EmbarkedR[T.C]  0.08515    0.03428   2.484   0.0132 *  
+## EmbarkedR[T.Q]  0.06059    0.04776   1.268   0.2050    
+## Pclass         -0.15307    0.01645  -9.307   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for gaussian family taken to be 0.1491811)
+## 
+##     Null deviance: 210.73  on 890  degrees of freedom
+## Residual deviance: 132.17  on 886  degrees of freedom
+## AIC: 840.32
+## 
+## Number of Fisher Scoring iterations: 2
+</code></pre>
+
+<pre><code class="r">model4&lt;- glm(Survived ~ sexR+TamanyFamilia+Pclass,data=titanic_train)
+summary(model4)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = Survived ~ sexR + TamanyFamilia + Pclass, data = titanic_train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.9495  -0.2526  -0.1091   0.2047   1.0192  
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    1.125021   0.043239  26.019  &lt; 2e-16 ***
+## sexR[T.male]  -0.532079   0.027951 -19.036  &lt; 2e-16 ***
+## TamanyFamilia -0.021392   0.008226  -2.600  0.00946 ** 
+## Pclass        -0.154148   0.015688  -9.826  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for gaussian family taken to be 0.1490855)
+## 
+##     Null deviance: 210.73  on 890  degrees of freedom
+## Residual deviance: 132.24  on 887  degrees of freedom
+## AIC: 838.76
+## 
+## Number of Fisher Scoring iterations: 2
+</code></pre>
+
+<pre><code class="r">model5&lt;- glm(Survived ~ sexR+Age,data=titanic_train)
+summary(model5)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = Survived ~ sexR + Age, data = titanic_train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.7450  -0.1894  -0.1879   0.2580   0.8142  
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   0.7391612  0.0356136  20.755   &lt;2e-16 ***
+## sexR[T.male] -0.5534355  0.0288230 -19.201   &lt;2e-16 ***
+## Age           0.0001031  0.0009723   0.106    0.916    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for gaussian family taken to be 0.1672435)
+## 
+##     Null deviance: 210.73  on 890  degrees of freedom
+## Residual deviance: 148.51  on 888  degrees of freedom
+## AIC: 940.16
+## 
+## Number of Fisher Scoring iterations: 2
+</code></pre>
+
+<p>Dels models anteriors (i tots els provats) seleccionem el <strong>model1</strong>, ja que ÃƒÂ©s el model que tÃƒÂ© major bondat per a tenir una menor AIC. A partir d&#39;aquest model predim la probabilitat de sobreviure de cadascÃƒÂºn dels registres del conjunt de test:</p>
+
+<pre><code class="r">titanic_test$sexR &lt;- relevel(titanic_test$Sex, ref = &quot;female&quot;)
+titanic_test$EmbarkedR &lt;- relevel(titanic_test$Embarked, ref = &quot;S&quot;)
+
+titanic_test$ProbSurvived &lt;- predict(model1, titanic_test)
+</code></pre>
+
+<p>Mostrem la taula que contÃƒÂ© el resultat de les prediccions del conjunt de test:</p>
+
+<pre><code class="r">library(kableExtra)
+kable(head(titanic_test), format = &#39;markdown&#39;)
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="left"></th>
+<th align="right">PassengerId</th>
+<th align="right">Survived</th>
+<th align="right">Pclass</th>
+<th align="left">Name</th>
+<th align="left">Sex</th>
+<th align="right">Age</th>
+<th align="right">Fare</th>
+<th align="left">Embarked</th>
+<th align="right">TamanyFamilia</th>
+<th align="left">sexR</th>
+<th align="left">EmbarkedR</th>
+<th align="right">ProbSurvived</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">892</td>
+<td align="right">892</td>
+<td align="right">NA</td>
+<td align="right">3</td>
+<td align="left">Kelly, Mr. James</td>
+<td align="left">male</td>
+<td align="right">34.5</td>
+<td align="right">7.8292</td>
+<td align="left">Q</td>
+<td align="right">1</td>
+<td align="left">male</td>
+<td align="left">Q</td>
+<td align="right">0.1310039</td>
+</tr>
+<tr>
+<td align="left">893</td>
+<td align="right">893</td>
+<td align="right">NA</td>
+<td align="right">3</td>
+<td align="left">Wilkes, Mrs. James (Ellen Needs)</td>
+<td align="left">female</td>
+<td align="right">47.0</td>
+<td align="right">7.0000</td>
+<td align="left">S</td>
+<td align="right">2</td>
+<td align="left">female</td>
+<td align="left">S</td>
+<td align="right">0.4801679</td>
+</tr>
+<tr>
+<td align="left">894</td>
+<td align="right">894</td>
+<td align="right">NA</td>
+<td align="right">2</td>
+<td align="left">Myles, Mr. Thomas Francis</td>
+<td align="left">male</td>
+<td align="right">62.0</td>
+<td align="right">9.6875</td>
+<td align="left">Q</td>
+<td align="right">1</td>
+<td align="left">male</td>
+<td align="left">Q</td>
+<td align="right">0.1742924</td>
+</tr>
+<tr>
+<td align="left">895</td>
+<td align="right">895</td>
+<td align="right">NA</td>
+<td align="right">3</td>
+<td align="left">Wirz, Mr. Albert</td>
+<td align="left">male</td>
+<td align="right">27.0</td>
+<td align="right">8.6625</td>
+<td align="left">S</td>
+<td align="right">1</td>
+<td align="left">male</td>
+<td align="left">S</td>
+<td align="right">0.1024324</td>
+</tr>
+<tr>
+<td align="left">896</td>
+<td align="right">896</td>
+<td align="right">NA</td>
+<td align="right">3</td>
+<td align="left">Hirvonen, Mrs. Alexander (Helga E Lindqvist)</td>
+<td align="left">female</td>
+<td align="right">22.0</td>
+<td align="right">12.2875</td>
+<td align="left">S</td>
+<td align="right">3</td>
+<td align="left">female</td>
+<td align="left">S</td>
+<td align="right">0.5742986</td>
+</tr>
+<tr>
+<td align="left">897</td>
+<td align="right">897</td>
+<td align="right">NA</td>
+<td align="right">3</td>
+<td align="left">Svensson, Mr. Johan Cervin</td>
+<td align="left">male</td>
+<td align="right">14.0</td>
+<td align="right">9.2250</td>
+<td align="left">S</td>
+<td align="right">1</td>
+<td align="left">male</td>
+<td align="left">S</td>
+<td align="right">0.1677532</td>
+</tr>
+</tbody></table>
+
+<pre><code class="r">write.csv(titanic_test, file = &quot;testPrediction.csv&quot;)
+</code></pre>
+
+<h1>5. RepresentaciÃƒÂ³ dels resultats a partir de taules i grÃƒÂ fiques.</h1>
+
+<p>Al llarg d&#39;aquesta prÃƒÂ ctica s&#39;han mostrat diferents grÃƒÂ fiques o taules per a mostrar els resultats.</p>
+
+<h1>6. ResoluciÃƒÂ³ del problema. A partir dels resultats obtinguts, quines sÃƒÂ³n les conclusions? Els resultats permeten respondre al problema?</h1>
+
+<h1>6.1.- ProcÃ©s de neteja i validaciÃ³</h1>
+
+<p>Es partia de dos conjunts de dades relatives als passatgers del Titanic. Un conjunt de training (on sâ€™informava el camp Survived) i un conjunt de test (on no sâ€™informava el camp Survived). El dataset sâ€™utilitza per generar models de predicciÃ³ de la probabilitat de supervivÃ¨ncia en funciÃ³ de les caracterÃ­stiques del passatger. Per a la fase de neteja i validaciÃ³ de les dades sâ€™ha optat per integrar els dos fitxers per disposar de mÃ©s registres que permetessin aplicar tÃ¨cniques per completar camps no informats amb major precisiÃ³. Dâ€™una anÃ lisi preliminar sâ€™ha comprovat que el conjunt de dades presentava nombrosos camps no informats (en especial el camp Age). Sâ€™ha procedit a analitzar aquests camps i aplicar diverses tÃ¨cniques per completar-los.</p>
+
+<p>El camp Fare (Tarifa) presentava un valor no informat. Per deduir-lo sâ€™han obtingut tots els registres que compartien classe i origen dâ€™embarcament, sâ€™ha obtingut la mitja i sâ€™ha assignat al valor no informat.</p>
+
+<p>Per al camp Embarket (Origen dâ€™embarcament) , sâ€™han obtingut els registres no informats i sâ€™observa que tots ells comparteixen tarifa i classe. Sâ€™ha obtingut la mitjana de la tarifa pels passatgers de classe 1 per cada port dâ€™origen i sâ€™ha assignat el port origen que tenia una tarifa mitjana mÃ©s propera.</p>
+
+<p>En el cas del camp Age, donat que hi havia molts camps no informats i era important conservar-los, sâ€™ha optat per aplicar la metodologia Mice (Multivariate Imputations by Chained Equations).</p>
+
+<p>Finalment pel camp Fare, sâ€™han substituÃ¯t els valors 0 per valors no informats (per requeriment de lâ€™algoritme kNN) i sâ€™ha utilitzat lâ€™algoritme kNN per estimar-los.</p>
+
+<p>Sâ€™han creat camps nous com TamanyFamilia que Ã©s la agrupaciÃ³ dels camps SibSp i  Parch, el que ha permÃ¨s reduir la dimensiÃ³ del dataset i sâ€™han generat els camps factor TipusFamilia i TipusEdat per si eren interessants per lâ€™aplicaciÃ³ de certs mÃ¨todes.</p>
+
+<p>El dataset final esta format pels camps PassangerId, Survival, Pclass, Name, Sex , Age, Fare, Embarked i TamanyFamilia.</p>
+
+<h1>6.2.- AnÃƒÂ lisi de dades</h1>
+
+<p>Fent l&#39;anÃƒÂ lisi de dades hem arribat a la conclusiÃƒÂ³, mitjanÃƒÂ§ant tests d&#39;hipÃƒÂ²tesis, que en general els passatgers del titÃƒÂ nic menor de vint anys tenien un major ÃƒÂ­ndex de supervivÃƒÂ¨ncia. MitjanÃƒÂ§ant aquesta mateixa prova hem vist que ni per la mida de la famÃƒÂ­lia, ni per la tarifa, ni per la classe en la qual es viatjava, s&#39;aprecien diferencies en l&#39;ÃƒÂ­ndex de supervivÃƒÂ¨ncia.</p>
+
+<p>Aplicant un test de correlaciÃƒÂ³, hem detectat correlaciÃƒÂ³ negativa entre el preu del bitllet i la classe que es viatja, l&#39;edat del passatger i la classe en la qual viatge o bÃƒÂ© l&#39;edat del passatger i el nombre de familiars a bord.</p>
+
+<p>Finalment i mitjanÃƒÂ§ant un algoritme de regressiÃƒÂ³ logistica, hem escollit un model entre els diferents que hem creat que ens a permÃƒÂ©s predir la probabilitat de supervivencia dels individuos del conjunt de test.</p>
+
+<table border=1>
+<th> Contribucions </th>
+<th> Firma </th>
+
+<tr>
+<td>InvestigaciÃƒÂ³ prÃƒÂ¨via</td>
+<td>PC CR</td>
+</tr>
+
+<tr>
+<td>RedacciÃƒÂ³ de les respostes</td>
+<td>PC CR</td>
+</tr>
+
+<tr>
+<td>Desenvolupament codi</td>
+<td>PC CR</td>
+</tr>
+</table>
+
+</body>
+
+</html>
