@@ -1,0 +1,613 @@
+---
+title: "Tipologia i Cicle de vida de les dades"
+subtitle: "Pràctica 2: Neteja i validació de les dades"
+author: "Pol Casellas, Carlos Rivas"
+date: '`r format(Sys.Date(),"%e de %B, %Y")`'
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+    
+---
+
+# PRACTICA 2 - NETEJA I VALIDACIO DE DADES
+# POL CASELLAS i CARLES RIVAS
+# ---------------------------------------------------------------------
+# ---------------------------------------------------------------------
+
+# 1. Descripció del dataset. Perquè és important i quina pregunta/problema pretén respondre?
+
+El dataset original és el dataset de dades dels passatgers del Titànic, que s’utilitza en la competició  “Titanic: Machine Learning from Disaster”. Esta composat per dos fitxers, un de training (train.csv) amb 891 registres i un de test (test.csv) amb 418 registres. L’objectiu del dataset de la competició es generar un model de ML per predir la supervivència a l’enfonsament del vaixell, en base a la informació disponible dels passatgers.
+
+El diccionari de dades del dataset original és :
+
+<table border=1>
+
+<th> Variable </th>
+<th> Descripció </th>
+<th> Tipus </th>
+<th> Valors </th>
+
+<tr>
+<td>PassangerId</td>
+<td>Identificador de passatger</td>
+<td>Enter</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Survival</td>
+<td>Identificador de supervivència</td>
+<td>Factor</td>
+<td>0 = No, 1 = Yes</td>
+</tr>
+
+<tr>
+<td>Pclass</td>
+<td>Classe del passatge	</td>
+<td>Factor</td>
+<td>1 = 1a, 2 = 2ona, 3 = 3ª </td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>Nom del passatger</td>
+<td>Text</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Sex</td>
+<td>Sexe</td>
+<td>Factor</td>
+<td>1 = male, 2 = female</td>
+<td></td>
+</tr>
+<tr>
+<td>Age</td>
+<td>Edat en anys</td>
+<td>Nombre</td>
+<td></td>
+</tr>
+<tr>
+<td>Sibsp</td>
+<td>Nombre de germans i dones embarcats</td>
+<td>Enter	</td>
+<td></td>
+</tr>
+<tr>
+<td>Parch</td>
+<td>Nombre de pares i fills embarcats</td>
+<td>Enter</td>
+<td></td>
+</tr>	
+<tr>
+<td>Ticket</td>
+<td>Nombre de Ticket </td>
+<td>Text</td>
+<td></td>
+</tr>
+<tr>
+<td>Fare</td>
+<td>Tarifa del passatge</td>
+<td>Nombre</td>
+<td></td>
+</tr>
+<tr>
+<td>Cabin</td>
+<td>Nombre de cabina</td>
+<td>Text</td>
+<td></td>
+</tr>
+<tr>
+<td>Embarked</td>
+<td>Port d’Embarcament</td>
+<td>Factor</td>
+<td>C = Cherbourg 
+Q = Queenstown 
+S = Southampton</td>
+</tr>
+
+</table>
+
+# 2. Integració i selecció de les dades d’interès a analitzar.
+
+Es disposa de 2 fitxers, un fitxer d’entrenament (que disposa de les dades de supervivència) i un fitxer de test (sense les dades de supervivència). Es llegeixen les dades i s’integren en un únic dataset.  
+
+
+```{r, message=FALSE}
+library('dplyr')
+dades <- bind_rows(read.csv('train.csv', stringsAsFactors = F), read.csv('test.csv', stringsAsFactors = F))
+```
+
+Es crea un dataset que integra els dos fitxers anomenat dades. La comanda dim(dades) mostra el nombre d’observacions i atributs de la mostra, que en aquest cas són 1309 observacions i 12 atributs. El camp **Survived** només està informat per les entrades del fitxer d’entrenament (fins la posició 891). En la resta d’entrades, el valor en N.A.
+
+```{r, message=FALSE}
+dim (dades)
+```
+
+La comanda str(dades) presenta de forma compacta l’estructura interna del dataset. 
+
+```{r, message=FALSE}
+str(dades)
+```
+
+
+Amb la comanda 
+
+```{r, message=FALSE}
+factors<-c('Sex','Embarked')
+dades[factors] <- lapply(dades[factors], function(x) as.factor(x))
+```
+
+s’indica al dataset que els camps **Pclass**, **Sex** i **Embarked** són factors. Al aplicar de nou la funció str(dades) es pot observar que ara es consideren factors i es mostren els possibles valors que admeten.
+
+```{r, message=FALSE}
+str(dades)
+```
+
+La comanda summary(dades) mostra una visió general dels atributs i en el cas de factors, es presenten els valors possibles i el nombre d’ocurrències per cada valor. A més, es pot observar que hi ha diversos valors mal informats o buits. 
+
+```{r, message=FALSE}
+summary (dades)
+```
+
+# 3. Neteja de les dades.
+
+## 3.1 Les dades contenen zeros o elements buits? Com gestionaries aquests casos?
+
+Es pot observar que hi ha 418 valors no informats de Survived que corresponen als valors del fitxer de test, 263 registres no presents a **Age**, 1 registre  que no informa el **Fare** i 2 registres que no indiquen el camp Embarked. Addicionalment hi ha diversos registres de **Fare** amb valor 0. Es procedeix a aplicar diverses tècniques per completar aquestes dades. 
+
+-	Per intentar determinar el valor de la tarifa (**Fare**) que manca, el primer que es fa és identificar el registre mal informat
+
+```{r,message=FALSE}
+IdNoFare <- dades$PassengerId[is.na(dades$Fare)]
+dades[IdNoFare,]
+```
+
+S’observa que es tracta d’un passatger de classe 3 i que va embarcar a ‘S’. Es calcula el preu mitja de la tarifa d’aquest tipus de clients i s’assigna a la tarifa del passatger no informat. El càlcul de la mitjana no té en compte els valors NA (paràmetre na.rm = TRUE)
+
+
+```{r,message=FALSE}
+dades$Fare[is.na(dades$Fare)] <- median(dades[dades$Pclass == '3' & dades$Embarked == 'S', ]$Fare, na.rm = TRUE)
+dades[IdNoFare,]
+```
+
+El valor assignat és 8,05 $
+
+-	Per intentar determinar el valor de l’Embarked que manca, el primer que es fa és identificar els registres mal informats
+
+```{r,message=FALSE}
+IdNoEmbarked <- dades$PassengerId[dades$Embarked == '']
+dades[IdNoEmbarked,]
+```
+
+S’observa que es tracta de passatgers de classe 1 amb una tarifa de 80 $. Per determinar el port d’embarcament es calcula la tarifa mitjana per a la classe 1, per cada tipus d’embarcament possible.
+
+```{r,message=FALSE}
+median(dades[dades$Pclass == '1' & dades$Embarked == 'S', ]$Fare, na.rm = TRUE)
+median(dades[dades$Pclass == '1' & dades$Embarked == 'Q', ]$Fare, na.rm = TRUE)
+median(dades[dades$Pclass == '1' & dades$Embarked == 'C', ]$Fare, na.rm = TRUE)
+```
+
+S’observa que la tarifa mitjana més propera a la dels registres no informats és 76,73 $ corresponent a l’embarcament ‘C’. S’assigna aquest valor als registres mal informats.
+
+```{r,message=FALSE}
+dades$Embarked[c(IdNoEmbarked)] <- 'C'
+```
+
+-	Donat que el nombre de valors **Age** no informats és elevat, la opció d’esborrar aquests valors suposaria la pèrdua de molts registres que si contenen altres valors i que és interessant conservar. Per aquest motiu, s’utilitzarà la llibreria mice (Multivariate Imputations by Chained Equations) que implementa un mètode per tractar valors no informats, creant múltiples imputacions per dades no informades multivariable. Cada variable incompleta es pot imputar per un model separat, permetent la imputació de barreges de dades de diversos tipus (categòriques, continues, binaries, ...) i mantenir la coherència entre les imputacions mitjançant la implantació passiva. 
+
+S’aplica la funció mice a un subconjunt dels camps del dataset, no es contemplen els camps **PassengerId**, **Name**, **Ticket**, **Cabin**, **Survived** perquè no aporten res al model i es simplifiquen els càlculs
+
+```{r,message=FALSE}
+library('mice')
+library('randomForest')
+set.seed(1000) 
+dadesAge <- complete(mice(dades[, !names(dades) %in% c('PassengerId','Name', 'Ticket', 'Cabin', 'Survived')], method='rf'))
+```
+
+Mitjançant la comparació visual de plots sobre l’**Age** original i el estimat, es pot verificar que la assignació de les edats no informades no introdueix biaixos en les dades. 
+
+```{r,message=FALSE}
+par(mfrow=c(1,2))
+hist(dades$Age, freq=F, main='Age: Original', col='red', ylim=c(0,0.05))
+hist(dadesAge$Age, freq=F, main='Age: Estimat', col='blue', ylim=c(0,0.05))
+```
+
+```{r,message=FALSE}
+dades$Age <- dadesAge$Age 
+summary (dades)
+```
+
+-	En el camp **Fare** s’observen diversos valors a 0 que es considera un valor fals, que correspon a valors no informats. Per estimar-los s’utilitza l’algoritme kNN. En primer lloc es substitueix els valors 0 per NA, ja que l’algoritme només estima els valors NA del dataset. A continuació s’aplica l’algoritme i s’obtenen valors pels valors no informats de **Fare**.
+
+```{r,message=FALSE}
+# Els valors 0 de Fare es converteixen en NA i es dedueixen amb l'algoritme KNN
+dades$Fare[dades$Fare == 0] <- NA
+
+# Es Comprova si hi ha NA,s a Fare
+sapply(dades, function(x) sum(is.na(x)))
+```
+
+S’observa que al **Fare** hi ha 17 registres no informats.
+
+```{r,message=FALSE}
+library(VIM)
+
+# S'aplica l'algoritme kNN
+dades.kNN <- kNN(dades[, !names(dades) %in% c('PassengerId','Name', 'Ticket', 'Cabin', 'Survived')])
+
+# Es comprova si hi ha NA,s a Fare estimat
+sapply(dades.kNN, function(x) sum(is.na(x)))
+
+# Es comprova si hi ha zeros a Fare estimat
+length(dades.kNN$Fare[dades.kNN$Fare == 0])
+
+# S'assignen els valors de Fare estimats amb kNN al dataset original
+dades$Fare = dades.kNN$Fare
+```
+
+-	Per millorar el dataset es planteja la creació de nous camps a partir de les dades disponibles :
+
+En primer lloc es crea el camp **TamanyFamilia** format a partir de la suma dels camps **SibSp** i **Parch** (cònjuges, germans, pares i fills) més el propi passatger.
+
+```{r,message=FALSE}
+# Creació del camp TamanyFamilia
+dades$TamanyFamilia <- dades$SibSp + dades$Parch + 1
+```
+
+A partir d’aquest camp es crea el camp **TipusFamilia**, de tipus factor, format a partir de rangs de nombre de membres de la família embarcats.
+
+```{r,message=FALSE}
+# Creació del camp TipusFamilia
+dades$TipusFamilia[dades$TamanyFamilia == 1] <- 'solitari'
+dades$TipusFamilia[dades$TamanyFamilia < 5 & dades$TamanyFamilia > 1] <- 'petita'
+dades$TipusFamilia[dades$TamanyFamilia > 4] <- 'nombrosa'
+
+# Conversió a factor
+dades$TipusFamilia <- as.factor(dades$TipusFamilia)
+```
+
+També a partir del camp Age es crea el camp **TipusEdat**, de tipus factor, format a partir de rangs d’edats.
+
+```{r,message=FALSE}
+# Es crea el camp TipusEdat en funció de franges d'edat i es converteix en factor
+
+dades$TipusEdat[dades$Age < 18] <- 'Menor' 
+dades$TipusEdat[dades$Age >= 18 & dades$Age <= 65] <- 'Adult'
+dades$TipusEdat[dades$Age > 65] <- 'Ancià'
+dades$TipusEdat <- as.factor(dades$TipusEdat)
+```
+En funci� del tipus de metodologies i algoritmes a utilitzar es pot prioritzar l'�s d'atributs num�rics com en el cas d'**Age** o **TamanyFamilia**, o be, atributs de tipus factor com s�n **TipusEdat** o **TipusFamilia**, calculats a partir dels camps num�rics. Tamb� s'ha descartat l'�s del camp **Ticket** per que presenta una estructura bastant variable, no segueix un patr� i correspon en gran part a codis de ticket autonum�rics que s'han considerats que aporten poca informaci� per a la questi� plantejada. El camp **Cabin** tamb� s'ha descartat perqu�, si be era un camp que potencialment podria aportar informaci� rellevant respecte a la superviv�ncia en funci� de les cabines, per exemple, degut a la seva ubicaci�, el nombre de valors no informats �s molt elevat (m�s de 4/5 parts) el que fa poc recomanble el completar els valors no informats mitjan�ant les t�cniques aplicades en altres casos. 
+Finalment s'ha utilitzar el camp TamanyFamilia, enlloc dels camps SibSp i Parch, ja que n'�s l'agrupaci� d'ambos, reduint la dimensionalitat del dataset. S'han mantinut els camps **PassengerId** i **Name** per claredat ja que no aporten valor a la identificaci� de la superviv�ncia.
+
+Per tant el dataset final, integrat i filtrat és el següent :
+
+```{r,message=FALSE}
+#dataset final integrat i filtrat 
+dades = dades[, !names(dades) %in% c('SibSp','Parch', 'Ticket', 'Cabin', 'TipusFamilia', "TipusEdat")]
+summary (dades)
+```
+
+El diccionari de dades del dataset final, integrat i filtrat és el següent :
+
+<table border=1>
+
+<th> Variable </th>
+<th> Descripció </th>
+<th> Tipus </th>
+<th> Valors </th>
+
+<tr>
+<td>PassangerId</td>
+<td>Identificador de passatger</td>
+<td>Enter</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Survival</td>
+<td>Identificador de supervivència</td>
+<td>Factor</td>
+<td>0 = No, 1 = Yes</td>
+</tr>
+
+<tr>
+<td>Pclass</td>
+<td>Classe del passatge	</td>
+<td>Factor</td>
+<td>1 = 1a, 2 = 2ona, 3 = 3ª </td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>Nom del passatger</td>
+<td>Text</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Sex</td>
+<td>Sexe</td>
+<td>Factor</td>
+<td>1 = male, 2 = female</td>
+<td></td>
+</tr>
+<tr>
+<td>Age</td>
+<td>Edat en anys</td>
+<td>Nombre</td>
+<td></td>
+</tr>
+<tr>
+<td>Fare</td>
+<td>Tarifa del passatge</td>
+<td>Nombre</td>
+<td></td>
+</tr>
+<tr>
+<td>Embarked</td>
+<td>Port d’Embarcament</td>
+<td>Factor</td>
+<td>C = Cherbourg 
+Q = Queenstown 
+S = Southampton</td>
+</tr>
+<tr>
+<td>TamanyFamilia	</td>
+<td>Nombre de familiars embarcats	</td>
+<td>Enter	</td>
+<td>
+</tr>
+</table>
+
+
+## 3.2. Identificació i tractament de valors extrems.
+
+Identifiquem els valors extrems de les variables **Age** i **Fare** a partir de la funció boxplot:
+```{r,message=FALSE}
+outliers_age <- boxplot.stats(dades$Age)$out
+outliers_fare <- boxplot.stats(dades$Fare)$out
+outliers_age
+outliers_fare
+```
+
+Si observem els valors extrems identificats de les variables **Age** i **Fare**, són valors coherents i que no tenen perqué suposar un error en la mostra de dades. No obstant, si volguesim eliminar els valors ho fariem mitjançant el codi següent:
+
+```{r,execute=FALSE}
+#dades<-dades[-which(dades$Age %in% outliers_age),]
+#dades<-dades[-which(dades$Fare %in% outliers_fare),]
+```
+
+
+#4. Anàlisi de les dades.
+
+##4.1. Selecció dels grups de dades que es volen analitzar/comparar (planificació dels anàlisis a aplicar).
+
+##4.2. Comprovació de la normalitat i homogeneïtat de la variància.
+
+##4.3. Aplicació de proves estadístiques per comparar els grups de dades. En funció de les dades i de l’objectiu de l’estudi, aplicar proves de contrast d’hipòtesis, correlacions, regressions, etc. Aplicar almenys tres mètodes d’anàlisi diferents.
+
+En l'apartat anterior, hem integrat els conjunts d'entrenament i test, aquest fet ens ha estat útil per a obtenir una major mostra per omplir amb major confiança els buits o zeros del conjunt. No obstant això, en aquest apartat ens centrarem en la variable **Survived**. Aquesta variable ens indica si un individuo va sobreviure o no a l'accident del titànic, només la tenim informada per a les dades del conjunt d'entrenament, per tant, només utilitzarem les dades d'aquest.
+
+```{r,message=FALSE}
+titanic_train <- dades[!is.na(dades$Survived),]
+titanic_test <- dades[is.na(dades$Survived),]
+
+write.csv(dades, file = "dadesValidated.csv")
+write.csv(titanic_train, file = "trainValidated.csv")
+write.csv(titanic_test, file = "testValidated.csv")
+```
+
+### Hipòtesi nul·la i alternativa
+
+En aquest cas d'estudi, prenem per a hipòtesi nul·la que la mitjana de les variables numèriques **Age, TamanyFamilia, Fare, Pclass** és independent a la variable **Survived**. És a dir, les mitjanes de les variables anteriors pels passatgers sobrevivents i les que no són iguals.
+$H_0: \mu_1 = \mu_0$
+
+Com a hipòtesi alternativa, es té que la mitjana de cadascuna de les variables dels passatgers sobrevivents i la dels no sobrevivents és diferent.
+$H_1: \mu_1 \not= \mu_0$
+
+On $\mu_1$ és la mitjana de cadascuna de les variables numèriques pels passatgers supervivents i $\mu_2$ és la mitjana de la variable d'estudi pels passatgers no supervivents.
+
+### Assumpció de normalitat
+
+Comprovar si es compleix l'assumpció de normalitat en les dades. Per a fer-ho, s'aplica el test Shapiro-Wilk. Si el p-valor del test Shapiro Wilk és superior a 0.05, implica que la distribució de les dades no és significativament diferent de la distribució normal. És a dir, podem assumir normalitat.
+
+
+```{r,message=FALSE}
+shapiro.test(titanic_train$Age)
+shapiro.test(titanic_train$TamanyFamilia)
+shapiro.test(titanic_train$Fare)
+shapiro.test(titanic_train$Pclass)
+length(titanic_train$Pclass)
+```
+
+Com que el p-valor és inferior a 0,05 en tots els casos, es rebutja la hipòtesi nul·la del test de Shapiro-Wilk que confirma l'assumpció de normalitat en les dades.
+
+No obstant això, com que es té que $N=891$ com a conseqüència del teorema del límit central, es pot considerar que les dades segueixen una distribució normal.
+
+### Homogeneïtat de la variància
+
+Les variàncies són desconegudes. A continuació, per a decidir si apliquem variàncies iguals o diferents, apliquem el test de Fligner-Killena.
+
+
+```{r,message=FALSE}
+library(car)
+
+fligner.test(Age ~ Survived, data = titanic_train)
+fligner.test(TamanyFamilia ~ Survived, data = titanic_train)
+fligner.test(Fare ~ Survived, data = titanic_train)
+fligner.test(Pclass ~ Survived, data = titanic_train)
+```
+
+El p-valor és superior a 0,05 en la variable age i per tant en ella podem assumir la igualtat de variàncies. No obstant això, per la resta de variables el p-valor és inferior a 0,05 i per tant s'assumeix la no igualtat de variàncies.
+
+Per tant, apliquem test t de dues mostres independents per a la diferència de mitjanes, variàncies desconegudes i iguals en el cas de l'edat i apliquem test de wilcox en el cas de la mida de la família, la tarifa i la classe.
+
+```{r,message=FALSE}
+t.test(Age ~ Survived,data = titanic_train, var.equal=TRUE)
+wilcox.test(TamanyFamilia ~ Survived,data = titanic_train, var.equal=TRUE)
+wilcox.test(Fare ~ Survived,data = titanic_train, var.equal=TRUE)
+wilcox.test(Pclass ~ Survived,data = titanic_train, var.equal=TRUE)
+```
+
+El valor-p és superior a 0,05 en el cas de l'edat i per tant s'accepta la hipòtesi $H_0$ i s'afirma que hi ha diferència estadística en la mitjana d'edat en els dos grups. A continuació es mostren dos histogrames, un amb l'edat dels supervivents i l'altre amb els no supervivents.
+
+```{r, message=FALSE}
+hist(dades$Age[dades$Survived == 0], main = "Histograma edat passatgers no supervivents", col = "red")
+hist(dades$Age[dades$Survived == 1], main = "Histograma edat passatgers supervivents", col = "blue")
+```
+
+En els dos histogrames anteriors, es veu com la majoria de passatgers amb edat inferior a 20 anys van sobreviure al titànic. Pel que fa a les altres franges d'edat, no s'aprecien diferencies.
+
+En canvi, el valor-p és inferior a 0,05 en el cas del dimensió de la família, la tarifa i la classe, per tant es rebutja la hipòtesi $H_0$ i s'accepta la hipòtesi alternativa $H_1$ que afirmar que no hi ha diferència estadística de la mitjana de les dues variables en els dos grups.
+
+### Correlació
+
+Per a comprovar la correlació entre variables, tan sols comparem les variables numèriques. Per tant, per a aquesta prova seleccionem tan sols les variables **Age**, **TamanyFamilia**, **Fare** i **Pclass**. En primer lloc calculem la matriu de correlació entre les variables.
+
+
+```{r,message=FALSE}
+titanic_cor <- data.frame(titanic_train$Age, titanic_train$TamanyFamilia, titanic_train$Fare, titanic_train$Pclass)
+cor(titanic_cor)
+```
+
+Estudiem doncs els casos amb major correlació:
+
+-Variables **Pclass** i **Fare**: correlació de -0.5598987.
+-Variables **Pclass** i **Age**: correlació de -0.3543361.
+-Variables **Age** i **TamanyFamilia**: correlació de -0.3142511.
+
+Abans de comprovar la correlació entre els parells de variables anteriors, per a decidir quin és el mètode més adequat a aplicar, cal comprovar si es compleix l'assumpció de normalitat en les dades. Per a fer-ho, tal com hem fet anteriorment, s'aplica el test Shapiro-Wilk.
+
+```{r,message=FALSE}
+shapiro.test(titanic_train$Pclass)
+shapiro.test(titanic_train$Age)
+shapiro.test(titanic_train$Fare)
+shapiro.test(titanic_train$TamanyFamilia)
+```
+
+Com que en tots els casos, el p-valor és inferior a 0,05 es rebutja la hipòtesi nul·la del test de Shapiro-Wilk  que confirma l'assumpció de normalitat en les dades. Per tant, per a estudiar la correlació entre els parells de variables estudiats aplicarem el test de Spearman.
+
+```{r,message=FALSE}
+cor.test(titanic_train$Pclass,titanic_train$Fare, method="spearman")
+cor.test(titanic_train$Pclass,titanic_train$Age, method="spearman")
+cor.test(titanic_train$TamanyFamilia,titanic_train$Age, method="spearman")
+```
+
+En els tres casos, el p-valor és significatiu. Per tant, podem observar doncs una correlació prou significativa entre les parelles de variables estudiades, més concretament:
+
+-Variables **Pclass** i **Fare**: correlació de -0.7284641
+-Variables **Pclass** i **Age**: correlació de -0.3433576
+-Variables **Age** i **TamanyFamilia**: correlació de -0.2299892
+
+La primera resulta totalment comprensible ja que la tarifa sol anar marcada principalment per a la classe, on la primera és la que té tarifa més alta i la tercera la més baixa, és a dir correlació negativa.
+
+El segon resultat també sembla coherent, ja que com més edat té una persona, normalment acostuma a tenir major poder adquisitiu i més comoditat busca, per tant, selecciona classes superiors.
+
+Les variables **Age** i **TamanyFamilia** tenen una petita correlació negativa que també té una possible explicació, ja que per exemple els nens, no viatjaran sols. En canvi, els adults sí que podrien viatjar sols. Finalment, observem els diagrames de dispersió de les 3 parelles anteriors.
+
+```{r, message=FALSE}
+plot(titanic_train$Fare, titanic_train$Pclass, main="Diagrama dispersió Pclass i Fare")
+plot(titanic_train$Age, titanic_train$Pclass, main="Diagrama dispersió Pclass i Age")
+plot(titanic_train$Age, titanic_train$TamanyFamilia, main="Diagrama dispersió Age i TamanyFamilia")
+```
+
+### Regressió logística
+
+En el nostre cas, el conjunt d'entrenament i de test ja venen definits per necesitat, ja que en aquest segon no hi ha la categorització de si un passatger a sobreviscut o no. En cas que no hi hagués un conjunt d'entrenament definit i per a guanyar una major eficiencia en l'algoritme predictiu, una bona estrategia seria dividir de diferents maneres els conjunts d'entrenament i test, comparant mitjanes o desviacions tipiques per tal d'aconseguir un model mes robust. Una tecnica molt comuna que permet crear diferents conjunts d'entrenaments i tests per tal d'optimitzar el model és el K-Fold.
+
+En primer lloc cal tractar les variables categòriques. Usant el que s’anomena variables dummy podrem calcular el model lineal. Per a fer-ho, especificarem quina és la categoria de referència amb la funció relevel(). En la variable **Sex**, la categoria de referència és “female” i per a la variable **Embarked** la categoria de referència és "S"
+
+```{r, message=FALSE}
+titanic_train$sexR <- relevel(titanic_train$Sex, ref = "female")
+titanic_train$EmbarkedR <- relevel(titanic_train$Embarked, ref = "S")
+```
+
+Apliquem diversos models de regressió logística combinant diferents variables del conjunt de dades per a buscar el millor model de regressió.
+
+```{r, message=FALSE}
+model1<- glm(Survived ~ sexR+TamanyFamilia+Age+EmbarkedR+Pclass,data=titanic_train)
+summary(model1)
+model2<- glm(Survived ~ sexR+Age+Pclass,data=titanic_train)
+summary(model2)
+model3<- glm(Survived ~ sexR+EmbarkedR+Pclass,data=titanic_train)
+summary(model3)
+model4<- glm(Survived ~ sexR+TamanyFamilia+Pclass,data=titanic_train)
+summary(model4)
+model5<- glm(Survived ~ sexR+Age,data=titanic_train)
+summary(model5)
+
+```
+
+Dels models anteriors (i tots els provats) seleccionem el **model1**, ja que és el model que té major bondat per a tenir una menor AIC. A partir d'aquest model predim la probabilitat de sobreviure de cadascún dels registres del conjunt de test:
+
+```{r, message=FALSE}
+titanic_test$sexR <- relevel(titanic_test$Sex, ref = "female")
+titanic_test$EmbarkedR <- relevel(titanic_test$Embarked, ref = "S")
+
+titanic_test$ProbSurvived <- predict(model1, titanic_test)
+```
+
+Mostrem la taula que conté el resultat de les prediccions del conjunt de test:
+
+```{r, message=FALSE}
+library(kableExtra)
+kable(head(titanic_test), format = 'markdown')
+
+write.csv(titanic_test, file = "testPrediction.csv")
+```
+
+# 5. Representació dels resultats a partir de taules i gràfiques.
+
+Al llarg d'aquesta pràctica s'han mostrat diferents gràfiques o taules per a mostrar els resultats.
+
+# 6. Resolució del problema. A partir dels resultats obtinguts, quines són les conclusions? Els resultats permeten respondre al problema?
+
+# 6.1.- Proc�s de neteja i validaci�
+ 
+Es partia de dos conjunts de dades relatives als passatgers del Titanic. Un conjunt de training (on s�informava el camp Survived) i un conjunt de test (on no s�informava el camp Survived). El dataset s�utilitza per generar models de predicci� de la probabilitat de superviv�ncia en funci� de les caracter�stiques del passatger. Per a la fase de neteja i validaci� de les dades s�ha optat per integrar els dos fitxers per disposar de m�s registres que permetessin aplicar t�cniques per completar camps no informats amb major precisi�. D�una an�lisi preliminar s�ha comprovat que el conjunt de dades presentava nombrosos camps no informats (en especial el camp Age). S�ha procedit a analitzar aquests camps i aplicar diverses t�cniques per completar-los.
+
+El camp Fare (Tarifa) presentava un valor no informat. Per deduir-lo s�han obtingut tots els registres que compartien classe i origen d�embarcament, s�ha obtingut la mitja i s�ha assignat al valor no informat.
+
+Per al camp Embarket (Origen d�embarcament) , s�han obtingut els registres no informats i s�observa que tots ells comparteixen tarifa i classe. S�ha obtingut la mitjana de la tarifa pels passatgers de classe 1 per cada port d�origen i s�ha assignat el port origen que tenia una tarifa mitjana m�s propera.
+
+En el cas del camp Age, donat que hi havia molts camps no informats i era important conservar-los, s�ha optat per aplicar la metodologia Mice (Multivariate Imputations by Chained Equations).
+
+Finalment pel camp Fare, s�han substitu�t els valors 0 per valors no informats (per requeriment de l�algoritme kNN) i s�ha utilitzat l�algoritme kNN per estimar-los.
+
+S�han creat camps nous com TamanyFamilia que �s la agrupaci� dels camps SibSp i  Parch, el que ha perm�s reduir la dimensi� del dataset i s�han generat els camps factor TipusFamilia i TipusEdat per si eren interessants per l�aplicaci� de certs m�todes.
+
+El dataset final esta format pels camps PassangerId, Survival, Pclass, Name, Sex , Age, Fare, Embarked i TamanyFamilia.
+
+# 6.2.- Anàlisi de dades
+
+Fent l'anàlisi de dades hem arribat a la conclusió, mitjançant tests d'hipòtesis, que en general els passatgers del titànic menor de vint anys tenien un major índex de supervivència. Mitjançant aquesta mateixa prova hem vist que ni per la mida de la família, ni per la tarifa, ni per la classe en la qual es viatjava, s'aprecien diferencies en l'índex de supervivència.
+
+Aplicant un test de correlació, hem detectat correlació negativa entre el preu del bitllet i la classe que es viatja, l'edat del passatger i la classe en la qual viatge o bé l'edat del passatger i el nombre de familiars a bord.
+
+Finalment i mitjançant un algoritme de regressió logistica, hem escollit un model entre els diferents que hem creat que ens a permés predir la probabilitat de supervivencia dels individuos del conjunt de test.
+
+
+<table border=1>
+<th> Contribucions </th>
+<th> Firma </th>
+
+<tr>
+<td>Investigació prèvia</td>
+<td>PC CR</td>
+</tr>
+
+<tr>
+<td>Redacció de les respostes</td>
+<td>PC CR</td>
+</tr>
+
+<tr>
+<td>Desenvolupament codi</td>
+<td>PC CR</td>
+</tr>
+</table>
+
