@@ -1,7 +1,5 @@
 # Practica2
-Practica 2 - Neteja i Validacio de Dades
-
-Pol Casellas i Carles Rivas
+Practica 2 - Neteja i Validacio de Dades - Pol Casellas i Carles Rivas
 
 
 Practica2.R         - Codi en R de la practica
