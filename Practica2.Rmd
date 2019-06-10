@@ -4,23 +4,20 @@ subtitle: "Pràctica 2: Neteja i validació de les dades"
 author: "Pol Casellas, Carlos Rivas"
 date: '`r format(Sys.Date(),"%e de %B, %Y")`'
 output:
+  pdf_document:
+    
+    toc: yes
   html_document:
     toc: yes
-  pdf_document:
-    toc: yes
-    
 ---
 
-# PRACTICA 2 - NETEJA I VALIDACIO DE DADES
-# POL CASELLAS i CARLES RIVAS
-# ---------------------------------------------------------------------
-# ---------------------------------------------------------------------
 
 # 1. Descripció del dataset. Perquè és important i quina pregunta/problema pretén respondre?
 
 El dataset original és el dataset de dades dels passatgers del Titànic, que s’utilitza en la competició  “Titanic: Machine Learning from Disaster”. Esta composat per dos fitxers, un de training (train.csv) amb 891 registres i un de test (test.csv) amb 418 registres. L’objectiu del dataset de la competició es generar un model de ML per predir la supervivència a l’enfonsament del vaixell, en base a la informació disponible dels passatgers.
 
 El diccionari de dades del dataset original és :
+
 
 <table border=1>
 
@@ -197,7 +194,7 @@ S’observa que la tarifa mitjana més propera a la dels registres no informats 
 dades$Embarked[c(IdNoEmbarked)] <- 'C'
 ```
 
--	Donat que el nombre de valors **Age** no informats és elevat, la opció d’esborrar aquests valors suposaria la pèrdua de molts registres que si contenen altres valors i que és interessant conservar. Per aquest motiu, s’utilitzarà la llibreria mice (Multivariate Imputations by Chained Equations) que implementa un mètode per tractar valors no informats, creant múltiples imputacions per dades no informades multivariable. Cada variable incompleta es pot imputar per un model separat, permetent la imputació de barreges de dades de diversos tipus (categòriques, continues, binaries, ...) i mantenir la coherència entre les imputacions mitjançant la implantació passiva. 
+-	Donat que el nombre de valors **Age** no informats és elevat, la opció d’esborrar aquests valors suposaria la pèrdua de molts registres que si contenen altres valors i que és interessant conservar. Per aquest motiu, s’utilitzarà la llibreria mica (Multivariate Imputations by Chained Equations) que implementa un mètode per tractar valors no informats, creant múltiples imputacions per dades no informades multivariable. Cada variable incompleta es pot imputar per un model separat, permetent la imputació de barreges de dades de diversos tipus (categòriques, continues, binaries, ...) i mantenir la coherència entre les imputacions mitjançant la implantació passiva. 
 
 S’aplica la funció mice a un subconjunt dels camps del dataset, no es contemplen els camps **PassengerId**, **Name**, **Ticket**, **Cabin**, **Survived** perquè no aporten res al model i es simplifiquen els càlculs
 
@@ -258,30 +255,28 @@ En primer lloc es crea el camp **TamanyFamilia** format a partir de la suma dels
 dades$TamanyFamilia <- dades$SibSp + dades$Parch + 1
 ```
 
-A partir d’aquest camp es crea el camp **TipusFamilia**, de tipus factor, format a partir de rangs de nombre de membres de la família embarcats.
+A partir d'aquest camp es crea el camp **TipusFamilia**, de tipus factor, format a partir de rangs de nombre de membres de la família embarcats.
 
 ```{r,message=FALSE}
 # Creació del camp TipusFamilia
 dades$TipusFamilia[dades$TamanyFamilia == 1] <- 'solitari'
 dades$TipusFamilia[dades$TamanyFamilia < 5 & dades$TamanyFamilia > 1] <- 'petita'
 dades$TipusFamilia[dades$TamanyFamilia > 4] <- 'nombrosa'
-
 # Conversió a factor
 dades$TipusFamilia <- as.factor(dades$TipusFamilia)
 ```
 
-També a partir del camp Age es crea el camp **TipusEdat**, de tipus factor, format a partir de rangs d’edats.
+També a partir del camp Age es crea el camp **TipusEdat**, de tipus factor, format a partir de rangs d'edats.
 
 ```{r,message=FALSE}
 # Es crea el camp TipusEdat en funció de franges d'edat i es converteix en factor
-
 dades$TipusEdat[dades$Age < 18] <- 'Menor' 
 dades$TipusEdat[dades$Age >= 18 & dades$Age <= 65] <- 'Adult'
-dades$TipusEdat[dades$Age > 65] <- 'Ancià'
+dades$TipusEdat[dades$Age > 65] <- 'Anciá '
 dades$TipusEdat <- as.factor(dades$TipusEdat)
 ```
-En funci� del tipus de metodologies i algoritmes a utilitzar es pot prioritzar l'�s d'atributs num�rics com en el cas d'**Age** o **TamanyFamilia**, o be, atributs de tipus factor com s�n **TipusEdat** o **TipusFamilia**, calculats a partir dels camps num�rics. Tamb� s'ha descartat l'�s del camp **Ticket** per que presenta una estructura bastant variable, no segueix un patr� i correspon en gran part a codis de ticket autonum�rics que s'han considerats que aporten poca informaci� per a la questi� plantejada. El camp **Cabin** tamb� s'ha descartat perqu�, si be era un camp que potencialment podria aportar informaci� rellevant respecte a la superviv�ncia en funci� de les cabines, per exemple, degut a la seva ubicaci�, el nombre de valors no informats �s molt elevat (m�s de 4/5 parts) el que fa poc recomanble el completar els valors no informats mitjan�ant les t�cniques aplicades en altres casos. 
-Finalment s'ha utilitzar el camp TamanyFamilia, enlloc dels camps SibSp i Parch, ja que n'�s l'agrupaci� d'ambos, reduint la dimensionalitat del dataset. S'han mantinut els camps **PassengerId** i **Name** per claredat ja que no aporten valor a la identificaci� de la superviv�ncia.
+En funció del tipus de metodologies i algoritmes a utilitzar es pot prioritzar l'ús d'atributs numèrics com en el cas d'**Age** o **TamanyFamilia**, o be, atributs de tipus factor com són **TipusEdat** o **TipusFamilia**, calculats a partir dels camps numèrics. També s'ha descartat l'ús del camp **Ticket** per que presenta una estructura bastant variable, no segueix un patró i correspon en gran part a codis de ticket autonumèrics que s'han considerats que aporten poca informació per a la questió plantejada. El camp **Cabin** també s'ha descartat perqué, si be era un camp que potencialment podria aportar informació rellevant respecte a la supervivència en funció de les cabines, per exemple, degut a la seva ubicació, el nombre de valors no informats és molt elevat (més de 4/5 parts) el que fa poc recomanble el completar els valors no informats mitjançant les tècniques aplicades en altres casos. 
+Finalment s'ha utilitzar el camp TamanyFamilia, enlloc dels camps SibSp i Parch, ja que n'és l'agrupació d'ambos, reduint la dimensionalitat del dataset. S'han mantinut els camps **PassengerId** i **Name** per claredat ja que no aporten valor a la identificació de la supervivència.
 
 Per tant el dataset final, integrat i filtrat és el següent :
 
@@ -290,6 +285,8 @@ Per tant el dataset final, integrat i filtrat és el següent :
 dades = dades[, !names(dades) %in% c('SibSp','Parch', 'Ticket', 'Cabin', 'TipusFamilia', "TipusEdat")]
 summary (dades)
 ```
+
+
 
 El diccionari de dades del dataset final, integrat i filtrat és el següent :
 
@@ -342,9 +339,21 @@ El diccionari de dades del dataset final, integrat i filtrat és el següent :
 <td></td>
 </tr>
 <tr>
+<td>Ticket</td>
+<td>Nombre de Ticket </td>
+<td>Text</td>
+<td></td>
+</tr>
+<tr>
 <td>Fare</td>
 <td>Tarifa del passatge</td>
 <td>Nombre</td>
+<td></td>
+</tr>
+<tr>
+<td>Cabin</td>
+<td>Nombre de cabina</td>
+<td>Text</td>
 <td></td>
 </tr>
 <tr>
@@ -361,8 +370,10 @@ S = Southampton</td>
 <td>Enter	</td>
 <td>
 </tr>
-</table>
 
+
+
+</table>
 
 ## 3.2. Identificació i tractament de valors extrems.
 
@@ -395,10 +406,6 @@ En l'apartat anterior, hem integrat els conjunts d'entrenament i test, aquest fe
 ```{r,message=FALSE}
 titanic_train <- dades[!is.na(dades$Survived),]
 titanic_test <- dades[is.na(dades$Survived),]
-
-write.csv(dades, file = "dadesValidated.csv")
-write.csv(titanic_train, file = "trainValidated.csv")
-write.csv(titanic_test, file = "testValidated.csv")
 ```
 
 ### Hipòtesi nul·la i alternativa
@@ -454,12 +461,10 @@ wilcox.test(Pclass ~ Survived,data = titanic_train, var.equal=TRUE)
 ```
 
 El valor-p és superior a 0,05 en el cas de l'edat i per tant s'accepta la hipòtesi $H_0$ i s'afirma que hi ha diferència estadística en la mitjana d'edat en els dos grups. A continuació es mostren dos histogrames, un amb l'edat dels supervivents i l'altre amb els no supervivents.
-
 ```{r, message=FALSE}
 hist(dades$Age[dades$Survived == 0], main = "Histograma edat passatgers no supervivents", col = "red")
 hist(dades$Age[dades$Survived == 1], main = "Histograma edat passatgers supervivents", col = "blue")
 ```
-
 En els dos histogrames anteriors, es veu com la majoria de passatgers amb edat inferior a 20 anys van sobreviure al titànic. Pel que fa a les altres franges d'edat, no s'aprecien diferencies.
 
 En canvi, el valor-p és inferior a 0,05 en el cas del dimensió de la família, la tarifa i la classe, per tant es rebutja la hipòtesi $H_0$ i s'accepta la hipòtesi alternativa $H_1$ que afirmar que no hi ha diferència estadística de la mitjana de les dues variables en els dos grups.
@@ -517,8 +522,6 @@ plot(titanic_train$Age, titanic_train$TamanyFamilia, main="Diagrama dispersió A
 
 ### Regressió logística
 
-En el nostre cas, el conjunt d'entrenament i de test ja venen definits per necesitat, ja que en aquest segon no hi ha la categorització de si un passatger a sobreviscut o no. En cas que no hi hagués un conjunt d'entrenament definit i per a guanyar una major eficiencia en l'algoritme predictiu, una bona estrategia seria dividir de diferents maneres els conjunts d'entrenament i test, comparant mitjanes o desviacions tipiques per tal d'aconseguir un model mes robust. Una tecnica molt comuna que permet crear diferents conjunts d'entrenaments i tests per tal d'optimitzar el model és el K-Fold.
-
 En primer lloc cal tractar les variables categòriques. Usant el que s’anomena variables dummy podrem calcular el model lineal. Per a fer-ho, especificarem quina és la categoria de referència amb la funció relevel(). En la variable **Sex**, la categoria de referència és “female” i per a la variable **Embarked** la categoria de referència és "S"
 
 ```{r, message=FALSE}
@@ -526,23 +529,36 @@ titanic_train$sexR <- relevel(titanic_train$Sex, ref = "female")
 titanic_train$EmbarkedR <- relevel(titanic_train$Embarked, ref = "S")
 ```
 
-Apliquem diversos models de regressió logística combinant diferents variables del conjunt de dades per a buscar el millor model de regressió.
+Apliquem diversos models de regressió logística combinant diferents variables del conjunt de dades per a buscar el millor model de regressió. Per a buscar el millor model de regressió utilitzem la tècnica K-Cross-Validation. Aquesta tècnica permet dividir en diferents maneres els conjunts d'entrenament i test, comparant mitjanes o desviacions típiques per tal d'aconseguir un model més robust.
 
 ```{r, message=FALSE}
+library('boot')
 model1<- glm(Survived ~ sexR+TamanyFamilia+Age+EmbarkedR+Pclass,data=titanic_train)
+cv.error1 = cv.glm(titanic_train,model1,K=10)$delta
 summary(model1)
+cv.error1
 model2<- glm(Survived ~ sexR+Age+Pclass,data=titanic_train)
+cv.error2 = cv.glm(titanic_train,model2,K=10)$delta
 summary(model2)
+cv.error2
 model3<- glm(Survived ~ sexR+EmbarkedR+Pclass,data=titanic_train)
+cv.error3 = cv.glm(titanic_train,model3,K=10)$delta
 summary(model3)
+cv.error3
 model4<- glm(Survived ~ sexR+TamanyFamilia+Pclass,data=titanic_train)
+cv.error4 = cv.glm(titanic_train,model4,K=10)$delta
 summary(model4)
+cv.error4
 model5<- glm(Survived ~ sexR+Age,data=titanic_train)
+cv.error5 = cv.glm(titanic_train,model5,K=10)$delta
 summary(model5)
+cv.error5
 
 ```
 
-Dels models anteriors (i tots els provats) seleccionem el **model1**, ja que és el model que té major bondat per a tenir una menor AIC. A partir d'aquest model predim la probabilitat de sobreviure de cadascún dels registres del conjunt de test:
+Dels models anteriors (i tots els provats) seleccionem el **model1**, ja que és el model que té major bondat per a tenir una menor AIC i també és el model amb un menor índex d'error entre els diferents conjunts de prova utilitzats en la validació creuada.
+
+A partir d'aquest model predim la probabilitat de sobreviure de cadascún dels registres del conjunt de test:
 
 ```{r, message=FALSE}
 titanic_test$sexR <- relevel(titanic_test$Sex, ref = "female")
@@ -556,33 +572,37 @@ Mostrem la taula que conté el resultat de les prediccions del conjunt de test:
 ```{r, message=FALSE}
 library(kableExtra)
 kable(head(titanic_test), format = 'markdown')
-
-write.csv(titanic_test, file = "testPrediction.csv")
 ```
+
 
 # 5. Representació dels resultats a partir de taules i gràfiques.
 
-Al llarg d'aquesta pràctica s'han mostrat diferents gràfiques o taules per a mostrar els resultats.
+Al llarg d'aquesta pràctica s'han mostrat diferents gràfiques o taules per a mostrar els resultats. Com que una de les conclusions de l'accident del titànic coneguda històricament és que les dones van obtenir un major índex de supervivència, afegim un gràfic que ens mostra la comparativa de la supervivència en funció del sexe.
+```{r, message=FALSE}
+counts = table(titanic_train$Survived, titanic_train$Sex)
+barplot(counts, ylim=c(0, 1000), xlab="Sexe",ylab="Nombre de passatgers",main="Supervivència en funció del sexe",col = c("red", "blue"))
+legend("topleft", fill=c("red", "blue"), legend=c("No sobrevivents", "Sobrevivents"))
+```
 
 # 6. Resolució del problema. A partir dels resultats obtinguts, quines són les conclusions? Els resultats permeten respondre al problema?
 
-# 6.1.- Proc�s de neteja i validaci�
+## 6.1.- Procés de neteja i validació
  
-Es partia de dos conjunts de dades relatives als passatgers del Titanic. Un conjunt de training (on s�informava el camp Survived) i un conjunt de test (on no s�informava el camp Survived). El dataset s�utilitza per generar models de predicci� de la probabilitat de superviv�ncia en funci� de les caracter�stiques del passatger. Per a la fase de neteja i validaci� de les dades s�ha optat per integrar els dos fitxers per disposar de m�s registres que permetessin aplicar t�cniques per completar camps no informats amb major precisi�. D�una an�lisi preliminar s�ha comprovat que el conjunt de dades presentava nombrosos camps no informats (en especial el camp Age). S�ha procedit a analitzar aquests camps i aplicar diverses t�cniques per completar-los.
+Es partia de dos conjunts de dades relatives als passatgers del Titanic. Un conjunt de training (on s’informava el camp Survived) i un conjunt de test (on no s’informava el camp Survived). El dataset s’utilitza per generar models de predicció de la probabilitat de supervivència en funció de les característiques del passatger. Per a la fase de neteja i validació de les dades s’ha optat per integrar els dos fitxers per disposar de més registres que permetessin aplicar tècniques per completar camps no informats amb major precisió. D’una anàlisi preliminar s’ha comprovat que el conjunt de dades presentava nombrosos camps no informats (en especial el camp Age). S’ha procedit a analitzar aquests camps i aplicar diverses tècniques per completar-los.
 
-El camp Fare (Tarifa) presentava un valor no informat. Per deduir-lo s�han obtingut tots els registres que compartien classe i origen d�embarcament, s�ha obtingut la mitja i s�ha assignat al valor no informat.
+El camp Fare (Tarifa) presentava un valor no informat. Per deduir-lo s’han obtingut tots els registres que compartien classe i origen d’embarcament, s’ha obtingut la mitja i s’ha assignat al valor no informat.
 
-Per al camp Embarket (Origen d�embarcament) , s�han obtingut els registres no informats i s�observa que tots ells comparteixen tarifa i classe. S�ha obtingut la mitjana de la tarifa pels passatgers de classe 1 per cada port d�origen i s�ha assignat el port origen que tenia una tarifa mitjana m�s propera.
+Per al camp Embarket (Origen d’embarcament) , s’han obtingut els registres no informats i s’observa que tots ells comparteixen tarifa i classe. S’ha obtingut la mitjana de la tarifa pels passatgers de classe 1 per cada port d’origen i s’ha assignat el port origen que tenia una tarifa mitjana més propera.
 
-En el cas del camp Age, donat que hi havia molts camps no informats i era important conservar-los, s�ha optat per aplicar la metodologia Mice (Multivariate Imputations by Chained Equations).
+En el cas del camp Age, donat que hi havia molts camps no informats i era important conservar-los, s’ha optat per aplicar la metodologia Mice (Multivariate Imputations by Chained Equations).
 
-Finalment pel camp Fare, s�han substitu�t els valors 0 per valors no informats (per requeriment de l�algoritme kNN) i s�ha utilitzat l�algoritme kNN per estimar-los.
+Finalment pel camp Fare, s’han substituït els valors 0 per valors no informats (per requeriment de l’algoritme kNN) i s’ha utilitzat l’algoritme kNN per estimar-los.
 
-S�han creat camps nous com TamanyFamilia que �s la agrupaci� dels camps SibSp i  Parch, el que ha perm�s reduir la dimensi� del dataset i s�han generat els camps factor TipusFamilia i TipusEdat per si eren interessants per l�aplicaci� de certs m�todes.
+S’han creat camps nous com TamanyFamilia que és la agrupació dels camps SibSp i  Parch, el que ha permès reduir la dimensió del dataset i s’han generat els camps factor TipusFamilia i TipusEdat per si eren interessants per l’aplicació de certs mètodes.
 
 El dataset final esta format pels camps PassangerId, Survival, Pclass, Name, Sex , Age, Fare, Embarked i TamanyFamilia.
 
-# 6.2.- Anàlisi de dades
+## 6.2.- Anàlisi de dades
 
 Fent l'anàlisi de dades hem arribat a la conclusió, mitjançant tests d'hipòtesis, que en general els passatgers del titànic menor de vint anys tenien un major índex de supervivència. Mitjançant aquesta mateixa prova hem vist que ni per la mida de la família, ni per la tarifa, ni per la classe en la qual es viatjava, s'aprecien diferencies en l'índex de supervivència.
 
@@ -610,4 +630,3 @@ Finalment i mitjançant un algoritme de regressió logistica, hem escollit un mo
 <td>PC CR</td>
 </tr>
 </table>
-
