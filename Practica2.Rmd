@@ -4,10 +4,10 @@ subtitle: "Pràctica 2: Neteja i validació de les dades"
 author: "Pol Casellas, Carlos Rivas"
 date: '`r format(Sys.Date(),"%e de %B, %Y")`'
 output:
+  html_document:
+    toc: yes
   pdf_document:
     
-    toc: yes
-  html_document:
     toc: yes
 ---
 
@@ -338,24 +338,14 @@ El diccionari de dades del dataset final, integrat i filtrat és el següent :
 <td>Nombre</td>
 <td></td>
 </tr>
-<tr>
-<td>Ticket</td>
-<td>Nombre de Ticket </td>
-<td>Text</td>
-<td></td>
-</tr>
+
 <tr>
 <td>Fare</td>
 <td>Tarifa del passatge</td>
 <td>Nombre</td>
 <td></td>
 </tr>
-<tr>
-<td>Cabin</td>
-<td>Nombre de cabina</td>
-<td>Text</td>
-<td></td>
-</tr>
+
 <tr>
 <td>Embarked</td>
 <td>Port d’Embarcament</td>
@@ -630,3 +620,4 @@ Finalment i mitjançant un algoritme de regressió logistica, hem escollit un mo
 <td>PC CR</td>
 </tr>
 </table>
+
